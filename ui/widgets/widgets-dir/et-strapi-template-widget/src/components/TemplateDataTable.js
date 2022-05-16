@@ -124,7 +124,7 @@ class TemplateDataTable extends Component {
     }
 
     onSubmit = () => {
-        if (+this.state.currPageWillUpdating && this.state.currPageWillUpdating <= this.state.pageSize) {
+        if (+this.state.currPageWillUpdating && this.state.currPageWillUpdating <= this.state.lastPage) {
             this.setState({ page: +this.state.currPageWillUpdating })
         }
     };
@@ -161,8 +161,8 @@ class TemplateDataTable extends Component {
                             <table className="table dataTable table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Type</th>
+                                        <th width="45%">Name</th>
+                                        <th width="45%">Type</th>
                                         <th width="5%">Id</th>
                                         <th width="5%">Actions</th>
                                     </tr>
@@ -188,20 +188,20 @@ class TemplateDataTable extends Component {
                                                             disabled={false}
                                                             divider={false}
                                                             header={false}
-                                                            onClick={() => this.setState({ modalShow: true, selectedTempate: el })}>
-                                                            <span>
-                                                                {DELETE_LABEL}
-                                                            </span>
+                                                            // onClick={() => this.props.history.push(`/edit-template/${el.code || el.attributes.code}`,{tid:el.id})}
+                                                            onClick={() => this.props.history.push(`/edit-template/${el.id}`)}
+                                                        >
+                                                            {EDIT_LABEL}
                                                         </MenuItem>
                                                         <MenuItem
                                                             bsClass="dropdown"
                                                             disabled={false}
                                                             divider={false}
                                                             header={false}
-                                                            // onClick={() => this.props.history.push(`/edit-template/${el.code || el.attributes.code}`,{tid:el.id})}
-                                                            onClick={() => this.props.history.push(`/edit-template/${el.id}`)}
-                                                        >
-                                                            {EDIT_LABEL}
+                                                            onClick={() => this.setState({ modalShow: true, selectedTempate: el })}>
+                                                            <span>
+                                                                {DELETE_LABEL}
+                                                            </span>
                                                         </MenuItem>
                                                     </DropdownKebab>
                                                 </td>
