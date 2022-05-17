@@ -188,7 +188,6 @@ class TemplateDataTable extends Component {
                                                             disabled={false}
                                                             divider={false}
                                                             header={false}
-                                                            // onClick={() => this.props.history.push(`/edit-template/${el.code || el.attributes.code}`,{tid:el.id})}
                                                             onClick={() => this.props.history.push(`/edit-template/${el.id}`)}
                                                         >
                                                             {EDIT_LABEL}
