@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,6 +51,7 @@ public class EntTemplateController {
 
 	@Operation(summary = "Get all the templates", description = "Public api, no authentication required.")
 	@GetMapping("/")
+	@CrossOrigin
 	@RolesAllowed({ ApplicationConstants.ADMIN })
 	public List<TemplateResponseView> getTemplates() {
 		logger.debug("REST request to get templates");
@@ -73,6 +75,7 @@ public class EntTemplateController {
 	@Operation(summary = "Get the template details by id", description = "Public api, no authentication required.")
 	@GetMapping("/{templateId}")
 	@RolesAllowed({ ApplicationConstants.ADMIN })
+	@CrossOrigin
 	public ResponseEntity<TemplateResponseView> getTemplate(@PathVariable Long templateId) {
 		logger.debug("REST request to get EntTemplate Id: {}", templateId);
 		Optional<EntTemplate> entTemplateOptional = entTamplateService.getTemplate(templateId);
