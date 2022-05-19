@@ -80,6 +80,7 @@ export const getStrapiContentTypes = async () => {
 
         // dummyData = results[0];
         dummyData = getContentTypeObj;
+        console.log('API , dummyData', dummyData)
         // Type check TODO
         for (const One in dummyData) {
             if (Object.hasOwnProperty.call(dummyData, One)) {
@@ -107,6 +108,9 @@ export const getStrapiContentTypes = async () => {
             }
         }
 
+        console.log('API , dummyData 2', dummyData)
+
+        console.log('API fieldsArr', fieldsArr);
         fieldsArr.map((el) => {
             if (obj.hasOwnProperty(el)) {
                 const arr = obj[el];
@@ -126,6 +130,11 @@ export const getStrapiContentTypes = async () => {
 }
 
 let dummyData = {}
+
+let level3 = {
+    "ThirdleveNameOne": ["Color", "Paint"],
+    "ThirdleveNameTwo": ["Color"]
+}
 
 export const getAttributes = async (contentType) => {
     // TODO: TEST ENV START
