@@ -105,6 +105,7 @@ export const getContentTypes = async (conType) => {
             return el;
         }
     });
+    console.log("Only For Testing",filterListByConType)
     if (filterListByConType && filterListByConType.length && filterListByConType[0].schema) {
         return filterListByConType[0].schema.attributes;
     }
