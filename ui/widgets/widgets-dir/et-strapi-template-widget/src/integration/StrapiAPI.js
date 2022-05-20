@@ -1,5 +1,5 @@
 import axios from "axios";
-import { KC_TOKEN_PREFIX, STRAPI_COLTYPE_URL } from "../constant/constant";
+import { KC_TOKEN_PREFIX } from "../constant/constant";
 import { addAuthorizationRequestConfig } from "./Integration";
 
 const strapiBaseUrl = `${process.env.REACT_APP_STRAPI_API_URL}`;
@@ -20,6 +20,7 @@ export const getStrapiContentTypes = async () => {
  * @returns
  */
 export const getFields = async (contentType) => {
+    const STRAPI_COLTYPE_URL = `${strapiBaseUrl}/content-manager/collection-types/`;
     const { data: { results } } = await axios.get(`${STRAPI_COLTYPE_URL}${contentType}`, addAuthorizationRequestConfig({}, KC_TOKEN_PREFIX));
     const getContentTypeObj = await getContentTypes(contentType.split('.')[contentType.split('.').length - 1]);
 
@@ -57,6 +58,7 @@ export const getFields = async (contentType) => {
 let mutableDataObj = {};
 
 export const getAttributes = async (contentType) => {
+    const STRAPI_COLTYPE_URL = `${strapiBaseUrl}/content-manager/collection-types/`;
     const { data: { results } } = await axios.get(`${STRAPI_COLTYPE_URL}${contentType}`, addAuthorizationRequestConfig({}, KC_TOKEN_PREFIX));
     if (results && results.length) {
         const fieldsArr = Object.keys(results[0]);
