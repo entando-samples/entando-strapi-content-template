@@ -105,7 +105,9 @@ export const getContentTypes = async (conType) => {
             return el;
         }
     });
-    return filterListByConType[0].schema.attributes;
+    if (filterListByConType && filterListByConType.length && filterListByConType[0].schema) {
+        return filterListByConType[0].schema.attributes;
+    }
 }
 
 /**
