@@ -93,11 +93,19 @@ class ContentTemplateForm extends Component {
     }
 
     componentDidMount = async () => {
-        const attrdata = await getContentTypes('banner');
-        this.setState({ attributes: attrdata });
         await this.getCollectionTypes();
         if (this.state.formType === EDIT_LABEL) {
             await this.getTemplateById();
+        }
+    }
+
+    componentDidUpdate = async (prevProps, prevState) => {
+        if (this.state.selectedContentType !== prevState.selectedContentType) {
+            if (this.state.selectedContentType.length && this.state.selectedContentType[0].uid) {
+                const conType = this.state.selectedContentType[0].uid.split('.');
+                const attrdata = await getContentTypes(conType[conType.length - 1]);
+                this.setState({ attributes: attrdata });
+            }
         }
     }
 
@@ -394,7 +402,6 @@ class ContentTemplateForm extends Component {
                             const mappedToken = dictMapped[verified.namespace];
                             let dictList = null
                             if (!mappedToken[verified.term]) {
-                                const lastKey = subSpace.length[subSpace.length - 1]
                                 dictList = Object.keys(this.state.attributes[subSpace[0]][subSpace[1]]).map((entry) => {
                                     return createSuggestionItem(entry, verified.namespace, 2)
                                 })
