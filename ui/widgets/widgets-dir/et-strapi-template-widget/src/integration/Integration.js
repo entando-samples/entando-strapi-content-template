@@ -1,7 +1,7 @@
-import { KC_TOKEN_PREFIX } from "../constant/constant";
+import { KC_TOKEN_PREFIX, REACT_APP_LOCAL_STRAPI_TOKEN } from "../constant/constant";
 
 const STRAPI_TOKEN = {
-    'Authorization': `Bearer ${process.env.REACT_APP_LOCAL_STRAPI_TOKEN}`
+    'Authorization': `Bearer ${REACT_APP_LOCAL_STRAPI_TOKEN}`
 }
 
 // Get authrization tokens
