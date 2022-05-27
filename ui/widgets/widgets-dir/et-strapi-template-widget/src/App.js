@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router';
-import { BrowserRouter } from 'react-router-dom';
+// import { Route } from 'react-router';
+// import { BrowserRouter } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import ListContentTemplates from './pages/ListContentTemplates';
 import AddContentTemplate from './pages/AddContentTemplate';
 import EditContentTemplate from './pages/EditContentTemplate';
@@ -48,11 +49,15 @@ export default class App extends Component {
             })
           }
         </ToastNotificationList>
-        <BrowserRouter>
-          <Route path="/" exact><ListContentTemplates addNotification={this.addNotification} /></Route>
-          <Route path="/add-template" exact><AddContentTemplate addNotification={this.addNotification} /></Route>
-          <Route path="/edit-template/:templateId" exact><EditContentTemplate addNotification={this.addNotification} /></Route>
-        </BrowserRouter>
+        <HashRouter>
+          <Switch>
+            <Route path="/" exact>
+              <ListContentTemplates addNotification={this.addNotification} />
+            </Route>
+            <Route path="/add-template" exact><AddContentTemplate addNotification={this.addNotification} /></Route>
+            <Route path="/edit-template/:templateId" exact><EditContentTemplate addNotification={this.addNotification} /></Route>
+          </Switch>
+        </HashRouter>
       </div>
     )
   }

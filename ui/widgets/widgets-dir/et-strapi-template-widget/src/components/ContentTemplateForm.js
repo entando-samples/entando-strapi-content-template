@@ -14,7 +14,7 @@ import {
     TEMPLATE_CREATED_SUCCESSFULLY_MSG, TEMPLATE_UPDATED_MSG
 } from '../constant/constant';
 import { filterACollectionType, getFilteredContentTypes } from '../helpers/helpers';
-import { getAttributes, getFields } from '../integration/StrapiAPI';
+import { getAttributes, getContentTypes, getFields } from '../integration/StrapiAPI';
 import { addNewTemplate, editTemplate, getTemplateById } from '../integration/Template';
 import ModalUI from './ModalUI';
 import { FieldLevelHelp } from 'patternfly-react';
@@ -53,13 +53,15 @@ class ContentTemplateForm extends Component {
             contentTypes: [],
             styleSheet: '',
             modalShow: false,
-            // obj:{}, 
             editor: null,
             dictionaryLoaded: false,
             dictionary: DICTIONARY,
             dictList: [],
             dictMapped: DICTMAPPED,
             contentTemplateCompleter: null,
+            attributes: {},
+            subSpaceState: [],
+
             attributesList: [],
             attributesListJson: {},
             attributesListArray : [],
@@ -83,6 +85,7 @@ class ContentTemplateForm extends Component {
                 }
             },
         }
+        this.prevToken = '';
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleTypeHeadChange = this.handleTypeHeadChange.bind(this);
         this.handleStyleSheetChange = this.handleStyleSheetChange.bind(this);
@@ -93,6 +96,16 @@ class ContentTemplateForm extends Component {
         await this.getCollectionTypes();
         if (this.state.formType === EDIT_LABEL) {
             await this.getTemplateById();
+        }
+    }
+
+    componentDidUpdate = async (prevProps, prevState) => {
+        if (this.state.selectedContentType !== prevState.selectedContentType) {
+            if (this.state.selectedContentType.length && this.state.selectedContentType[0].uid) {
+                const conType = this.state.selectedContentType[0].uid.split('.');
+                const attrdata = await getContentTypes(conType[conType.length - 1]);
+                this.setState({ attributes: attrdata });
+            }
         }
     }
 
@@ -342,14 +355,15 @@ class ContentTemplateForm extends Component {
                 }
 
                 const [rootSpace, ...subSpace] = namespace.split('.');
+                this.setState({ subSpaceState: subSpace });
 
-                if (subSpace.length > 1) {
+                if (subSpace.length > 4) {
                     this.enableRootSuggestions();
                     return;
                 }
 
                 const verified = subSpace.length
-                    ? this.findTokenInDictMap(subSpace[0], rootSpace)
+                    ? this.findTokenInDictMap(subSpace[subSpace.length - 1], rootSpace)
                     : this.findTokenInDictMap(rootSpace);
                 if (verified) {
                     this.disableRootSuggestions();
@@ -371,22 +385,31 @@ class ContentTemplateForm extends Component {
                 callback,
             ) => {
                 const extracted = this.extractCodeFromCursor(cursor, prefix);
-                const { namespace } = extracted;
+                const { namespace, } = extracted;
                 if (!namespace) {
                     this.enableRootSuggestions();
                 } else {
                     const [rootSpace, ...subSpace] = namespace.split('.');
 
                     const verified = subSpace.length
-                        ? this.findTokenInDictMap(subSpace[0], rootSpace)
+                        ? this.findTokenInDictMap(subSpace[subSpace.length - 1], rootSpace)
                         : this.findTokenInDictMap(rootSpace);
                     if (verified) {
                         this.disableRootSuggestions();
                         const { dictMapped } = this.state;
+
                         if (verified.namespace) {
                             const mappedToken = dictMapped[verified.namespace];
-                            const dictList = mappedToken[verified.term]
-                                .map(entry => createSuggestionItem(entry, verified.namespace, 2));
+                            let dictList = null
+                            if (!mappedToken[verified.term]) {
+                                dictList = Object.keys(this.state.attributes[subSpace[0]][subSpace[1]]).map((entry) => {
+                                    return createSuggestionItem(entry, verified.namespace, 2)
+                                })
+                            } else {
+                                dictList = mappedToken[verified.term].map((entry) => {
+                                    return createSuggestionItem(entry, verified.namespace, 2)
+                                });
+                            }
                             this.setState({ dictList });
                         } else {
                             const mappedToken = dictMapped[verified.term];
@@ -425,38 +448,6 @@ class ContentTemplateForm extends Component {
         return { token, namespace };
     }
 
-    extractCodeFromCursor = ({ row, column }, prefixToken) => {
-        const { editor: { session } } = this.state;
-        const codeline = (session.getDocument().getLine(row)).trim();
-        const token = prefixToken || tokenUtils.retrievePrecedingIdentifier(codeline, column);
-        const wholeToken = tokenUtils.retrievePrecedingIdentifier(
-            codeline,
-            column,
-            /[.a-zA-Z_0-9$\-\u00A2-\uFFFF]/,
-        );
-        if (token === wholeToken) {
-            return { token, namespace: '' };
-        }
-        const namespace = wholeToken.replace(/\.$/g, '');
-        return { token, namespace };
-    }
-
-    extractCodeFromCursor = ({ row, column }, prefixToken) => {
-        const { editor: { session } } = this.state;
-        const codeline = (session.getDocument().getLine(row)).trim();
-        const token = prefixToken || tokenUtils.retrievePrecedingIdentifier(codeline, column);
-        const wholeToken = tokenUtils.retrievePrecedingIdentifier(
-            codeline,
-            column,
-            /[.a-zA-Z_0-9$\-\u00A2-\uFFFF]/,
-        );
-        if (token === wholeToken) {
-            return { token, namespace: '' };
-        }
-        const namespace = wholeToken.replace(/\.$/g, '');
-        return { token, namespace };
-    }
-
     enableRootSuggestions = () => {
         const { dictionary, contentTemplateCompleter } = this.state;
         langTools.setCompleters([...defaultCompleters, contentTemplateCompleter]);
@@ -465,14 +456,30 @@ class ContentTemplateForm extends Component {
         });
     }
 
+
+
     findTokenInDictMap = (token, parentToken) => {
+        this.prevToken = token;
         const { dictMapped } = this.state;
-        const findInDict = (term, dict) => (
-            Object.keys(dict).find((key) => {
-                const keyRegEx = new RegExp(`${escChars(key)}$`, 'g');
-                return keyRegEx.test(term);
-            })
-        );
+
+        const findInDict = (term, dict) => {
+            if (Array.isArray(dict)) {
+                return dict.find(dictEl => {
+                    const keyRegEx = new RegExp(`${escChars(dictEl)}$`, 'g');
+                    const result = keyRegEx.test(term)
+                    return token;
+                })
+            }
+            if (typeof dict === 'object') {
+                return (Object.keys(dict).find((key) => {
+                    const keyRegEx = new RegExp(`${escChars(key)}$`, 'g');
+                    const result = keyRegEx.test(term)
+                    return result;
+                }
+                ))
+            }
+        };
+
         if (!parentToken) {
             const term = findInDict(token, dictMapped);
             return term && { term };
@@ -481,7 +488,13 @@ class ContentTemplateForm extends Component {
         if (!namespace) {
             return false;
         }
-        const term = findInDict(token, dictMapped[parentToken]);
+        let term = null;
+
+        if (this.state.subSpaceState.length === 2) {
+            term = findInDict(this.prevToken, dictMapped[parentToken][this.state.subSpaceState[0]])
+        } else {
+            term = findInDict(this.prevToken, dictMapped[parentToken]);
+        }
         if (!term) return false;
         return { term, namespace };
     }

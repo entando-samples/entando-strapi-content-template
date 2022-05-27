@@ -1,3 +1,9 @@
+import { KC_TOKEN_PREFIX, REACT_APP_LOCAL_STRAPI_TOKEN } from "../constant/constant";
+
+const STRAPI_TOKEN = {
+    'Authorization': `Bearer ${REACT_APP_LOCAL_STRAPI_TOKEN}`
+}
+
 // Get authrization tokens
 export const addAuthorizationRequestConfig = (config = {}, defaultBearer = 'Bearer') => {
     let defaultOptions = getDefaultOptions(defaultBearer);
@@ -8,16 +14,27 @@ export const addAuthorizationRequestConfig = (config = {}, defaultBearer = 'Bear
 }
 
 const getKeycloakToken = () => {
+    // return ''; // only for local test
     if (window && window.entando && window.entando.keycloak && window.entando.keycloak.authenticated) {
         return window.entando.keycloak.token
+    } else {
+        return localStorage.getItem('token');
     }
-    return ''
 }
-
 
 const getDefaultOptions = (defaultBearer) => {
     const token = getKeycloakToken()
-    if (!token) return {}
+    if (!token) {
+        //Below if condition is to run the strapi API in local
+        if (defaultBearer === KC_TOKEN_PREFIX) {
+            return {
+                headers: STRAPI_TOKEN,
+            }
+        } else {
+            return {}
+        }
+    }
+    // logic to add token for both strapi and MS api
     return {
         headers: {
             Authorization: `${defaultBearer} ${token}`,

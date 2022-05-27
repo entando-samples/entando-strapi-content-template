@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.entando</groupId>
     <artifactId>ent-project-template</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.4</version>
     <description>Template for an ent compatible project</description>
     <properties>
         <problem-spring-web.version>0.25.0</problem-spring-web.version>
@@ -106,10 +106,10 @@
                             <image>adoptopenjdk/openjdk11:x86_64-alpine-jdk-11.0.12_7</image>
                         </from>
                         <to>
-                            <image>et-strapi-template-app/${project.artifactId}:${project.version}</image>
+                            <image>akhileshprajapatinv/${project.artifactId}:${project.version}</image>
                         </to>
                         <container>
-                            <mainClass>com.entando.hub.catalog.EntandoMSApplication</mainClass>
+                            <mainClass>com.entando.template.EntandoMSApplication</mainClass>
                             <ports>
                                 <port>8081</port>
                             </ports>
