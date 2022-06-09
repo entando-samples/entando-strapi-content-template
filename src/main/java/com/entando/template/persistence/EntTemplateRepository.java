@@ -1,5 +1,7 @@
 package com.entando.template.persistence;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,4 +22,13 @@ public interface EntTemplateRepository extends JpaRepository<EntTemplate, Long> 
 	 * @return
 	 */
 	Page<EntTemplate> findByCollectionType(String collectionType, Pageable pageable);
+	
+	/**
+	 * Find all templates by collectionType
+	 * @param collectionType
+	 * @return
+	 */
+	List<EntTemplate> findByCollectionTypeOrderByTemplateNameAsc(String collectionType);
+
+
 }

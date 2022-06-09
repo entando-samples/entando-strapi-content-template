@@ -53,9 +53,14 @@ public class EntTemplateController {
 	@GetMapping("/")
 	@CrossOrigin
 	@RolesAllowed({ ApplicationConstants.ADMIN })
-	public List<TemplateResponseView> getTemplates() {
-		logger.debug("REST request to get templates");
-		return entTamplateService.getTemplates().stream().map(TemplateResponseView::new).collect(Collectors.toList());
+	public List<TemplateResponseView> getTemplates(@RequestParam(required = false) String collectionType) {
+		if(Optional.ofNullable(collectionType).isPresent()) {
+			logger.debug("REST request to get templates by collectionType");
+			return entTamplateService.getTemplatesByCollectionType(collectionType).stream().map(TemplateResponseView::new).collect(Collectors.toList());
+		}else {
+			logger.debug("REST request to get templates");
+			return entTamplateService.getTemplates().stream().map(TemplateResponseView::new).collect(Collectors.toList());
+		}
 	}
 
 	@Operation(summary = "Get all the templates", description = "Public api, no authentication required.")
