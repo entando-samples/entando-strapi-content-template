@@ -43,7 +43,7 @@ public class EntTamplateService {
 	 * @return
 	 */
 	public List<EntTemplate> getTemplatesByCollectionType(String collectionType) {
-		return templateRepository.findByCollectionTypeOrderByTemplateNameAsc(collectionType);
+		return templateRepository.findByCollectionTypeIgnoreCaseOrderByTemplateName(collectionType);
 	}
 
 	/**
