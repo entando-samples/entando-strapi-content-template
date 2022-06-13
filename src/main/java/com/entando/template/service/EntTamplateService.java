@@ -31,11 +31,19 @@ public class EntTamplateService {
 	private EntTemplateRepository templateRepository;
 
 	/**
-	 * 
+	 * Get all templates
 	 * @return
 	 */
 	public List<EntTemplate> getTemplates() {
 		return templateRepository.findAll();
+	}
+	
+	/**
+	 * Get all templates by collection type
+	 * @return
+	 */
+	public List<EntTemplate> getTemplatesByCollectionType(String collectionType) {
+		return templateRepository.findByCollectionTypeIgnoreCaseOrderByTemplateName(collectionType);
 	}
 
 	/**
