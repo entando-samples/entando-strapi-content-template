@@ -73,3 +73,7 @@
     font-size: 57.6px;
     line-height: 57.6px;
 }
+
+.ignore_height {
+    height: 4% !important
+}

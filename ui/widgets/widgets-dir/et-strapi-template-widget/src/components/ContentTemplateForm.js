@@ -550,7 +550,8 @@ class ContentTemplateForm extends Component {
                                 options={this.state.contentTypes}
                                 placeholder="Choose..."
                                 selected={this.state.selectedContentType}
-                                className={this.state.errorObj.type.message && 'has-error'}
+                                // className={this.state.errorObj.type.message && 'has-error'}
+                                className={`ignore_height ${this.state.errorObj.type.message && 'has-error'}` }
                                 onBlur={() => this.onBlurHandler(ELE_TYPE.TYPE)}
                                 disabled={this.state.formType === EDIT_LABEL}
                             />
@@ -609,7 +610,8 @@ class ContentTemplateForm extends Component {
                         </div>
 
                         <div className="col-lg-10">
-                            <table className="table dataTable table-striped table-bordered table-hover">
+                            {/* <table className="table dataTable table-striped table-bordered table-hover"> */}
+                            <table className="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>Code</th>

@@ -27,6 +27,30 @@ export default class App extends Component {
     this.setState({notificationList: filterNotes})
   }
 
+  componentDidMount = () => {
+    let collection = document.getElementsByClassName("bx--row");
+    if (collection[4] && collection[4].className) {
+      collection[4].className = '';
+    }
+    if (collection[3] && collection[3].className) {
+      collection[3].className = '';
+    }
+    if (collection[2] && collection[2].className) {
+      collection[2].className = '';
+    }
+    if (collection[1] && collection[1].className) {
+      collection[1].className = '';
+    }
+    if (collection[0] && collection[0].className) {
+      collection[0].className = '';
+    }
+
+    let collection1 = document.getElementsByClassName("bx--grid Homepage__body");
+    if (collection1[0] && collection1[0].className) {
+      collection1[0].className = 'Homepage__body';
+    }
+  }
+
   render() {
     return (
       <div>
