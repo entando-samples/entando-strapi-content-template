@@ -12,6 +12,7 @@ import lombok.Data;
 public class TemplateResponseView {
 	private Long id;
 	private String templateName;
+	private String templateApiId;
 	private String collectionType;
 	private String contentShape;
 	private String styleSheet;
@@ -28,6 +29,7 @@ public class TemplateResponseView {
 	public TemplateResponseView(EntTemplate entity) {
 		this.id = entity.getId();
 		this.templateName = entity.getTemplateName();
+		this.templateApiId = entity.getTemplateApiId();
 		this.collectionType = entity.getCollectionType();
 		this.contentShape = entity.getContentShape();
 		this.styleSheet = entity.getStyleSheet();
