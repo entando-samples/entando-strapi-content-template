@@ -28,7 +28,7 @@ public interface EntTemplateRepository extends JpaRepository<EntTemplate, Long> 
 	 * @param collectionType
 	 * @return
 	 */
-	List<EntTemplate> findByCollectionTypeIgnoreCaseOrderByTemplateName(String collectionType);
+	List<EntTemplate> findByTemplateApiIdIgnoreCaseOrderByTemplateName(String templateApiId);
 
 
 }
