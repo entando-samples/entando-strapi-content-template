@@ -158,7 +158,8 @@ class TemplateDataTable extends Component {
                             </Link>
                         </div>
                         <div className="col-lg-12">
-                            <table className="table dataTable table-striped table-bordered table-hover">
+                            {/* <table className="table dataTable table-striped table-bordered table-hover"> */}
+                            <table className="table table-striped table-bordered table-hover" style={{ marginBottom: "0px" }}>
                                 <thead>
                                     <tr>
                                         <th width="45%">Name</th>
@@ -176,7 +177,7 @@ class TemplateDataTable extends Component {
                                                 <td>{el.id}</td>
                                                 <td>
                                                     <DropdownKebab
-                                                        className=""
+                                                        className="mykebabmenu"
                                                         // componentClass={function noRefCheck() { }}
                                                         id={el.id}
                                                         pullRight={true}

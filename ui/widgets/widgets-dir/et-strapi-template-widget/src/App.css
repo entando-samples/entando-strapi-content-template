@@ -77,3 +77,9 @@
 .ignore_height {
     height: 4% !important
 }
+
+.mykebabmenu:after {
+    content: '\2807';
+    font-size: 20px;
+}
+ 
