@@ -30,7 +30,7 @@ public class TemplateRequestView {
 		entity.setId(id);
 		entity.setCollectionType(templateRequestView.getCollectionType());
 		entity.setTemplateName(templateRequestView.getTemplateName());
-		entity.setTemplateName(templateRequestView.getTemplateApiId());
+		entity.setTemplateApiId(templateRequestView.getTemplateApiId());
 		entity.setContentShape(templateRequestView.getContentShape());
 		entity.setStyleSheet(templateRequestView.getStyleSheet());
 		return entity;
