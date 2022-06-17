@@ -159,16 +159,20 @@ class ContentTemplateForm extends Component {
         let notificationObj = NOTIFICATION_OBJECT;
         notificationObj.key = uuidv4();
 
+        let filterUidByContentTypeLabel = this.state.contentTypes.find(el => {
+            if (el.label === this.state.selectedContentType[0].label) return el;
+        })
+
         let templateObject =
         {
             "collectionType": this.state.selectedContentType.length ? this.state.selectedContentType[0].label : '',
             "templateName": this.state.name ? this.state.name : '',
+            "templateApiId": filterUidByContentTypeLabel.uid.split('.')[filterUidByContentTypeLabel.uid.split('.').length - 1],
             "contentShape": this.state.editorCoding,
             // TODO: require clear
             "code": "News7777",
-            "styleSheet": this.state.styleSheet
+            "styleSheet": this.state.styleSheet,
         }
-
         if (this.state.formType === EDIT_LABEL) {
             await this.callEditTemplateApi(templateObject, notificationObj);
         }
