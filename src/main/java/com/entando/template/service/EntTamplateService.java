@@ -42,8 +42,8 @@ public class EntTamplateService {
 	 * Get all templates by collection type
 	 * @return
 	 */
-	public List<EntTemplate> getTemplatesByCollectionType(String collectionType) {
-		return templateRepository.findByCollectionTypeIgnoreCaseOrderByTemplateName(collectionType);
+	public List<EntTemplate> getTemplatesByCollectionType(String templateApiId) {
+		return templateRepository.findByTemplateApiIdIgnoreCaseOrderByTemplateName(templateApiId);
 	}
 
 	/**
