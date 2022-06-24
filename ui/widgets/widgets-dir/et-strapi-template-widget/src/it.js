@@ -1,6 +1,4 @@
 export default {
-   
-    
     'app.name':'Nome',
     'app.search':'Ricerca',
     'app.type':'Tipa',
@@ -77,5 +75,4 @@ export default {
     'app.selectOneExistingCollectionTypeToUseForTheContentTemplate':"Seleziona un tipo di raccolta esistente da utilizzare per il modello di contenuto.",
     'app.definesTheHTMLContentStructureUsingTheContentElementsDefinedByTheGivenCollectionType':"Definisce la struttura del contenuto HTML utilizzando gli elementi del contenuto definiti dal tipo di raccolta specificato.", 
     'app.providesAStylesheetFileToBeUsedWithTheHTMLModel':"Fornisce un file di foglio di stile da utilizzare con il modello HTML.",
-
 }

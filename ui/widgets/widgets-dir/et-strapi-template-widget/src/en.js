@@ -1,5 +1,4 @@
 export default {
- 
     'app.name':'Name',
     'app.search':'Search',
     'app.type':'Type',
