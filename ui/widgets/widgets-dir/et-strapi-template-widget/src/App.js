@@ -7,12 +7,27 @@ import AddContentTemplate from './pages/AddContentTemplate';
 import EditContentTemplate from './pages/EditContentTemplate';
 import './App.css';
 import { TimedToastNotification, ToastNotificationList } from 'patternfly-react';
+import { IntlProvider } from "react-intl";
+import en from "./en.js";
+import it from "./it.js";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      notificationList : []
+      notificationList : [],
+      locale:'en',
+      messages:{ en, it }
+    }
+  }
+
+  componentDidMount = () => {
+    this.setLocale();
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (prevProps.config !== this.props.config) {
+      this.setLocale();
     }
   }
 
@@ -71,9 +86,25 @@ export default class App extends Component {
     }
   }
 
+  setLocale = () => {
+    const currLocale = this.props.config && this.props.config.locale;
+    if (currLocale.length) {
+      this.setState({ locale: currLocale });
+    }
+  }
+
+  // handleChange = event => {
+  //   this.setState({ locale: event.target.value })
+  // };
+ 
   render() {
     return (
-      <div>
+      <IntlProvider locale={this.state.locale} messages={this.state.messages[this.state.locale]}>
+        <div>
+          {/* <select onChange={this.handleChange}>
+            <option value="en">en</option>
+            <option value="it">it</option>
+          </select> */}
         <ToastNotificationList>
           {
             this.state.notificationList.map(el => {
@@ -103,6 +134,7 @@ export default class App extends Component {
           </Switch>
         </HashRouter>
       </div>
+      </IntlProvider>
     )
   }
 }
