@@ -28,6 +28,26 @@ export default class App extends Component {
   }
 
   componentDidMount = () => {
+
+    // TODO: Adding font-awesome.min.css
+    if(!document.getElementById('id2')) { 
+      var link = document.createElement('link');
+      link.id = 'id2';
+      link.rel = 'stylesheet';
+      link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css';
+      document.head.appendChild(link);
+    }
+
+    if(!document.getElementById('id3')) { 
+      var link2 = document.createElement('link');
+      link2.id = 'id3';
+      link2.rel = 'stylesheet';
+      link2.href = 'https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css';
+      document.head.appendChild(link2);
+    }
+
+    // <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/patternfly/3.24.0/css/patternfly-additions.min.css"></link>
+
     let collection = document.getElementsByClassName("bx--row");
     if (collection[4] && collection[4].className) {
       collection[4].className = '';

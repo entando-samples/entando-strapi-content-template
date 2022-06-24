@@ -78,8 +78,12 @@
     height: 4% !important
 }
 
-.mykebabmenu:after {
+/* .mykebabmenu:after {
     content: '\2807';
     font-size: 20px;
+} */
+
+/* TODO: BY VJ */
+.content-view-pf-pagination .form-group {
+    align-items: normal !important;
 }
- 

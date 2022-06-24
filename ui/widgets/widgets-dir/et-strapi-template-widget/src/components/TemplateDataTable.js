@@ -55,9 +55,9 @@ class TemplateDataTable extends Component {
             prevState.pageSize !== this.state.pageSize) {
             await this.getTemplates(this.props.selectedCollectionType, true).then(res => {
                 if (this.state.templateData.length) {
-                    this.setState({currPageWillUpdating: PAGE})
+                    this.setState({ currPageWillUpdating: PAGE })
                 } else {
-                    this.setState({currPageWillUpdating: 0})
+                    this.setState({ currPageWillUpdating: 0 })
                 }
             });
         }
@@ -71,22 +71,22 @@ class TemplateDataTable extends Component {
     /**
      * Method to delete a template
      */
-     handleDelete = async () => {
+    handleDelete = async () => {
         let notificationObj = NOTIFICATION_OBJECT;
         notificationObj.key = uuidv4(),
-        await deleteTemplate(this.state.selectedTempate.id).then((res) => {
-            this.componentDidMount();
-            this.modalHide();
-            if(res.isError) {
-                notificationObj.type = NOTIFICATION_TYPE.ERROR;
-                notificationObj.message = res.errorBody.response.data.message;
-                notificationObj.timerdelay = NOTIFICATION_TIMER_ERROR;
-            } else {
-                notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
-                notificationObj.message = res.message;
-            }
-            this.props.addNotification(notificationObj);
-        });
+            await deleteTemplate(this.state.selectedTempate.id).then((res) => {
+                this.componentDidMount();
+                this.modalHide();
+                if (res.isError) {
+                    notificationObj.type = NOTIFICATION_TYPE.ERROR;
+                    notificationObj.message = res.errorBody.response.data.message;
+                    notificationObj.timerdelay = NOTIFICATION_TIMER_ERROR;
+                } else {
+                    notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
+                    notificationObj.message = res.message;
+                }
+                this.props.addNotification(notificationObj);
+            });
     }
 
     async getTemplates(selectedCollectionType, shouldInitPage = false) {
@@ -177,7 +177,7 @@ class TemplateDataTable extends Component {
                                                 <td>{el.id}</td>
                                                 <td>
                                                     <DropdownKebab
-                                                        className="mykebabmenu"
+                                                        // className="mykebabmenu"
                                                         // componentClass={function noRefCheck() { }}
                                                         id={el.id}
                                                         pullRight={true}
