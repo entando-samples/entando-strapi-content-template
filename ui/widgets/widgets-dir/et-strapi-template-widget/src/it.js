@@ -1,6 +1,4 @@
 export default {
-   
-    
     'app.name':'Nome',
     'app.search':'Ricerca',
     'app.type':'Tipa',
@@ -26,7 +24,7 @@ export default {
     'app.add':'Aggiungere',
     'app.editContentTemplate': 'Modifica modello di contenuto',
     'app.edit':'Modificare',
-    'app.close':'Chiudere',
+    'app.close':'Chiudi',
     'app.min3Char': 'Min 3 car',
     'app.max3Char':'Max 3 car',
     'app.nameRequired': 'Nome (obbligatorio',
@@ -72,10 +70,10 @@ export default {
     'app.lastPage': 'Ultima pagina',
     'app.perPage': 'per pagina',
     'app.of': 'di',
+    'app.templateDeletedSuccessfully':'Modello eliminato con successo',
     'app.providesTheAttributesListForTheSelectedCollectionType':"Fornisce l'elenco degli attributi per il tipo di raccolta selezionato.",
     'app.youCanInsertUpTo50Characters,IncludingUpperOrLowerCaseLettersNumbersAndSpecialCharacters':"È possibile inserire fino a 50 caratteri, comprese lettere maiuscole o minuscole, numeri e caratteri speciali.",
     'app.selectOneExistingCollectionTypeToUseForTheContentTemplate':"Seleziona un tipo di raccolta esistente da utilizzare per il modello di contenuto.",
     'app.definesTheHTMLContentStructureUsingTheContentElementsDefinedByTheGivenCollectionType':"Definisce la struttura del contenuto HTML utilizzando gli elementi del contenuto definiti dal tipo di raccolta specificato.", 
     'app.providesAStylesheetFileToBeUsedWithTheHTMLModel':"Fornisce un file di foglio di stile da utilizzare con il modello HTML.",
-
 }

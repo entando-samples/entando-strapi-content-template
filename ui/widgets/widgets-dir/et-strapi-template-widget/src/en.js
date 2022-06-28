@@ -1,5 +1,4 @@
 export default {
- 
     'app.name':'Name',
     'app.search':'Search',
     'app.type':'Type',
@@ -72,6 +71,7 @@ export default {
     'app.lastPage': 'Last Page',
     'app.perPage': 'per page',
     'app.of': 'of',
+    'app.templateDeletedSuccessfully':'Template deleted successfully',
     'app.providesTheAttributesListForTheSelectedCollectionType':'Provides the attributes list for the selected collection type.',
     'app.youCanInsertUpTo50Characters,IncludingUpperOrLowerCaseLettersNumbersAndSpecialCharacters':"You can insert up to 50 characters, including upper or lower case letters, numbers and special characters.",
     'app.selectOneExistingCollectionTypeToUseForTheContentTemplate':"Select one existing collection type to use for the content template.",
