@@ -132,3 +132,13 @@ export const filterACollectionType = async (data, collectionType) => {
     }
     return filteredCollectionType;
 }
+
+export const PAGINATION_MESSAGES = (props) => ({
+    "firstPage": props.intl.formatMessage({ id: "app.firstPage" }),
+    "previousPage": props.intl.formatMessage({ id: "app.previousPage" }),
+    "currentPage": props.intl.formatMessage({ id: "app.currentPage" }),
+    "nextPage": props.intl.formatMessage({ id: "app.nextPage" }),
+    "lastPage": props.intl.formatMessage({ id: "app.lastPage" }),
+    "perPage": props.intl.formatMessage({ id: "app.perPage" }),
+    "of": props.intl.formatMessage({ id: "app.of" }),
+});
