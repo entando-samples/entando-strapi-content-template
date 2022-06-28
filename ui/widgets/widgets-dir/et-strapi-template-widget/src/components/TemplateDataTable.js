@@ -1,14 +1,18 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { DropdownKebab, MenuItem, Spinner } from 'patternfly-react';
-import ModalUI from './ModalUI';
-import { withRouter } from "react-router-dom";
 import PaginationRow from 'patternfly-react/dist/js/components/Pagination/PaginationRow';
-import { getAllTemplates, deleteTemplate } from '../integration/Template';
-import { LASTPAGE, NOTIFICATION_OBJECT, PAGE, PAGECHANGEVALUE, PAGEINPUT, PAGESIZE, PERPAGEOPTIONS, TOTALITEMS, DEL_TEMPLATE_CONFIRM_MSG, DELETE_LABEL, EDIT_LABEL, NOTIFICATION_TYPE, NOTIFICATION_TIMER_ERROR, ADD_LABEL } from '../constant/constant';
+import React, { Component } from 'react';
+import { FormattedMessage, injectIntl } from "react-intl";
+import { Link, withRouter } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { FormattedMessage, injectIntl } from "react-intl";
-import { PAGINATION_MESSAGES } from "../helpers/helpers"
+import {
+    ADD_LABEL, DELETE_LABEL, DEL_TEMPLATE_CONFIRM_MSG, EDIT_LABEL, LASTPAGE,
+    NOTIFICATION_OBJECT, NOTIFICATION_TIMER_ERROR, NOTIFICATION_TYPE, PAGE,
+    PAGECHANGEVALUE, PAGEINPUT, PAGESIZE, PERPAGEOPTIONS, TEMPLATE_DELETED_MSG, TOTALITEMS
+} from '../constant/constant';
+import { PAGINATION_MESSAGES } from "../helpers/helpers";
+import { deleteTemplate, getAllTemplates } from '../integration/Template';
+import ModalUI from './ModalUI';
 const perPageOptions = PERPAGEOPTIONS;
 
 class TemplateDataTable extends Component {
@@ -73,19 +77,19 @@ class TemplateDataTable extends Component {
     handleDelete = async () => {
         let notificationObj = NOTIFICATION_OBJECT;
         notificationObj.key = uuidv4(),
-            await deleteTemplate(this.state.selectedTempate.id).then((res) => {
-                this.componentDidMount();
-                this.modalHide();
-                if (res.isError) {
-                    notificationObj.type = NOTIFICATION_TYPE.ERROR;
-                    notificationObj.message = res.errorBody.response.data.message;
-                    notificationObj.timerdelay = NOTIFICATION_TIMER_ERROR;
-                } else {
-                    notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
-                    notificationObj.message = res.message;
-                }
-                this.props.addNotification(notificationObj);
-            });
+        await deleteTemplate(this.state.selectedTempate.id).then((res) => {
+            this.componentDidMount();
+            this.modalHide();
+            if(res.isError) {
+                notificationObj.type = NOTIFICATION_TYPE.ERROR;
+                notificationObj.message = res.errorBody.response.data.message;
+                notificationObj.timerdelay = NOTIFICATION_TIMER_ERROR;
+            } else {
+                notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
+                notificationObj.message = TEMPLATE_DELETED_MSG;
+            }
+            this.props.addNotification(notificationObj);
+        });
     }
 
     async getTemplates(selectedCollectionType, shouldInitPage = false) {

@@ -550,6 +550,7 @@ class ContentTemplateForm extends Component {
                                 onChange={this.handleTypeHeadChange}
                                 options={this.state.contentTypes}
                                 placeholder={this.props.intl.formatMessage({ id: "app.choose" })}
+                                emptyLabel={this.props.intl.formatMessage({id:"app.noMatchesFound"})}
                                 selected={this.state.selectedContentType}
                                 // className={this.state.errorObj.type.message && 'has-error'}
                                 className={`ignore_height ${this.state.errorObj.type.message && 'has-error'}` }

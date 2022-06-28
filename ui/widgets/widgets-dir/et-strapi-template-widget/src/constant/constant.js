@@ -16,6 +16,7 @@ export const PAGECHANGEVALUE= 1;
 
 export const NO_TEMPLATE_FOUND = <FormattedMessage id="app.noTemplateFound." />;
 export const DEL_TEMPLATE_CONFIRM_MSG = <FormattedMessage id="app.doYouReallyWanttoDelete" />;
+export const TEMPLATE_DELETED_MSG = <FormattedMessage id="app.templateDeletedSuccessfully"/>;
 export const TEMPLATE_CREATED_SUCCESSFULLY_MSG =  <FormattedMessage id="app.templateCreatedSuccessfully" />;
 export const SOMETHING_WENT_WRONG_MSG =  <FormattedMessage id="app.somethingWentwrongPleaseTryAgain" />;
 export const TEMPLATE_UPDATED_MSG = <FormattedMessage id="app.templateUpdatedSuccessfully" />;
