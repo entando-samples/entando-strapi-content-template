@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import { FormattedMessage, injectIntl } from "react-intl";
 import { Link, withRouter } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { FormattedMessage, injectIntl } from "react-intl";
 import {
     ADD_LABEL, DELETE_LABEL, DEL_TEMPLATE_CONFIRM_MSG, EDIT_LABEL, LASTPAGE,
     NOTIFICATION_OBJECT, NOTIFICATION_TIMER_ERROR, NOTIFICATION_TYPE, PAGE,
