@@ -728,7 +728,7 @@ class ContentTemplateForm extends Component {
 
                 <ModalUI modalShow={this.state.modalShow} modalHide={this.modalHide} title={<FormattedMessage id="app.inlineEditingAssistan" />} cancelButtonLabel={CLOSE_LABEL}>
                     <span>
-                    <FormattedMessage id="app.providesAnExampleOnHowToActivate" /> <strong>style sheet INLINE EDITING </strong><FormattedMessage id="app.forEntandolabels" /> <br /><br />
+                        <FormattedMessage id="app.providesAnExampleOnHowToActivate" /> <strong>INLINE EDITING </strong><FormattedMessage id="app.forEntandolabels" /> <br /><br />
                         <ol>
                             <li><FormattedMessage id="app.openA" /> <strong>TAG </strong> <FormattedMessage id="app.likeDivPSpan" /></li>
                             <li><FormattedMessage id="app.addTheClass" />  <strong>' editContent '</strong><FormattedMessage id="app.toTheTAGKeepInMindThat" />  <strong>'editContentText'</strong> <FormattedMessage id="app.classCanBeUsedInCaseOfATextArea" />  </li>

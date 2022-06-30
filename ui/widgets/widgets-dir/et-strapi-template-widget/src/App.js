@@ -44,6 +44,13 @@ export default class App extends Component {
 
   componentDidMount = () => {
 
+    // Adjection css for table desing.
+    const divWithHomepage = document.getElementsByClassName('Homepage__body');
+
+    if (divWithHomepage.length) {
+      document.getElementsByClassName('Homepage__body')[0].style.minHeight = 'calc(100vh - 80px)';
+    }
+
     // TODO: Adding font-awesome.min.css
     if(!document.getElementById('id2')) { 
       var link = document.createElement('link');
