@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { getSanitizedCollectionTypes } from '../helpers/helpers';
-import { getCollectionTypes } from '../integration/Template'
-
+import { FormattedMessage } from "react-intl";
 export default class TemplateSearch extends Component {
     constructor(props) {
         super(props);
@@ -35,25 +34,26 @@ export default class TemplateSearch extends Component {
                 <div style={{ position: "relative", zIndex: "0" }}>
                     <div className="container-fluid">
                         <div className="show-grid row">
-                            <div className="col-lg-1" style={{ fontSize: "large", fontWeight: "500" }}>Search</div>
+                        <div className="col-lg-1" style={{ fontSize: "large", fontWeight: "500" }}><FormattedMessage id="app.search" /></div>
                             <div className="col-lg-10"></div>
                         </div>
                         <div className="show-grid row" style={{ height: "3.2rem" }}>
                             <div className="col-lg-1"></div>
                             <div className="col-lg-1"
                                 style={{ fontSize: "larger", fontWeight: "600", position: "relative", top: "50%", transform: "translateY(-50%)", }}>
-                                Type
+                                <FormattedMessage id="app.type" />
                             </div>
                             <select onChange={this.collectionTypeOnChange} className="col-lg-7" name="cars" id="cars" style={{ height: "100%", marginLeft: '2rem' }}>
-                                <option value="all">All</option>
-                                {/* {this.state.collectionType.map(el => <option key={el.apiID} value={el.apiID.charAt(0).toUpperCase() + el.apiID.slice(1)}>{el.apiID.charAt(0).toUpperCase() + el.apiID.slice(1)}</option>)} */}
+                                <FormattedMessage id='app.all' >
+                                    {(message) => <option value='All'>{message}</option>}
+                                </FormattedMessage>
                                 {this.state.collectionType.map(el => <option key={el.displayName} value={el.displayName}>{el.displayName}</option>)}
                             </select>
                         </div>
                         <div className="show-grid row" style={{ marginTop: "1rem" }}>
                             <div className="col-lg-7"></div>
                             <div className="col-lg-4" style={{ marginLeft: "5rem" }}>
-                                <button onClick={this.collectionTypeOnClick} className="btn btn-primary">Search</button>
+                                <button onClick={this.collectionTypeOnClick} className="btn btn-primary"><FormattedMessage id="app.search" /></button>
                             </div>
                         </div>
                     </div>
