@@ -1,13 +1,17 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { DropdownKebab, MenuItem, Spinner } from 'patternfly-react';
-import ModalUI from './ModalUI';
-import { withRouter } from "react-router-dom";
 import PaginationRow from 'patternfly-react/dist/js/components/Pagination/PaginationRow';
-import { getAllTemplates, deleteTemplate } from '../integration/Template';
-import { LASTPAGE, NOTIFICATION_OBJECT, PAGE, PAGECHANGEVALUE, PAGEINPUT, PAGESIZE, PERPAGEOPTIONS, TOTALITEMS, DEL_TEMPLATE_CONFIRM_MSG, DELETE_LABEL, EDIT_LABEL, NOTIFICATION_TYPE, NOTIFICATION_TIMER_ERROR, ADD_LABEL } from '../constant/constant';
+import React, { Component } from 'react';
+import { FormattedMessage, injectIntl } from "react-intl";
+import { Link, withRouter } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-
+import {
+    ADD_LABEL, DELETE_LABEL, DEL_TEMPLATE_CONFIRM_MSG, EDIT_LABEL, LASTPAGE,
+    NOTIFICATION_OBJECT, NOTIFICATION_TIMER_ERROR, NOTIFICATION_TYPE, PAGE,
+    PAGECHANGEVALUE, PAGEINPUT, PAGESIZE, PERPAGEOPTIONS, TEMPLATE_DELETED_MSG, TOTALITEMS
+} from '../constant/constant';
+import { PAGINATION_MESSAGES } from "../helpers/helpers";
+import { deleteTemplate, getAllTemplates } from '../integration/Template';
+import ModalUI from './ModalUI';
 const perPageOptions = PERPAGEOPTIONS;
 
 class TemplateDataTable extends Component {
@@ -30,8 +34,6 @@ class TemplateDataTable extends Component {
             // todo message No Template to show.
         };
     }
-
-
 
     onPageInput = e => {
         // todo make common method
@@ -83,7 +85,7 @@ class TemplateDataTable extends Component {
                 notificationObj.timerdelay = NOTIFICATION_TIMER_ERROR;
             } else {
                 notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
-                notificationObj.message = res.message;
+                notificationObj.message = TEMPLATE_DELETED_MSG;
             }
             this.props.addNotification(notificationObj);
         });
@@ -161,10 +163,10 @@ class TemplateDataTable extends Component {
                             <table className="table dataTable table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th width="45%">Name</th>
-                                        <th width="45%">Type</th>
-                                        <th width="5%">Id</th>
-                                        <th width="5%">Actions</th>
+                                        <th width="45%"><FormattedMessage id="app.name" /></th>
+                                        <th width="45%"><FormattedMessage id="app.type" /></th>
+                                        <th width="5%"><FormattedMessage id="app.id" /></th>
+                                        <th width="5%"><FormattedMessage id="app.actions" /></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -226,27 +228,26 @@ class TemplateDataTable extends Component {
                                 onNextPage={() => this.changePage(this.state.page + 1)}
                                 onLastPage={() => this.changePage(this.state.lastPage)}
                                 onSubmit={this.onSubmit}
-                            // messages={messages} i18n
+                                messages={PAGINATION_MESSAGES(this.props)}
                             />
                         </div>
                     </Spinner>
 
-                <ModalUI modalShow={this.state.modalShow} modalHide={this.modalHide} type={'delete'} handleDelete={this.handleDelete} title={"Delete Template"}>
-                    <div className="well">
-                        <span aria-hidden="true" className='text-center'>
-                        <div className="exclamation_icon">
-                            <span aria-hidden="true" className="fa fa-exclamation"></span>
+                    <ModalUI modalShow={this.state.modalShow} modalHide={this.modalHide} type={'delete'} handleDelete={this.handleDelete} title={<FormattedMessage id='app.deleteTemplate' />}>
+                        <div className="well">
+                            <span aria-hidden="true" className='text-center'>
+                                <div className="exclamation_icon">
+                                    <span aria-hidden="true" className="fa fa-exclamation"></span>
+                                </div>
+                                <h2><FormattedMessage id="app.delete" /> <b style={{ wordBreak: "break-word" }}> {this.state.selectedTempate && this.state.selectedTempate.templateName && this.state.selectedTempate.templateName} </b></h2>
+                                <h3> {DEL_TEMPLATE_CONFIRM_MSG} </h3>
+                            </span>
                         </div>
-
-                        <h2>Delete  <b style={{wordBreak: "break-word"}}> {this.state.selectedTempate && this.state.selectedTempate.templateName && this.state.selectedTempate.templateName} </b></h2>
-                        <h3> {DEL_TEMPLATE_CONFIRM_MSG} </h3>
-                        </span>
-                    </div>
-                </ModalUI>
-           </div>
+                    </ModalUI>
+                </div>
             </>
         )
     }
 }
 
-export default withRouter(TemplateDataTable);
+export default withRouter(injectIntl(TemplateDataTable));

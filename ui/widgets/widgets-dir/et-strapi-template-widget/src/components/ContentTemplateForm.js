@@ -18,7 +18,7 @@ import { getAttributes, getContentTypes, getFields } from '../integration/Strapi
 import { addNewTemplate, editTemplate, getTemplateById } from '../integration/Template';
 import ModalUI from './ModalUI';
 import { FieldLevelHelp } from 'patternfly-react';
-
+import { FormattedMessage, injectIntl } from "react-intl";
 const langTools = ace.acequire('ace/ext/language_tools');
 const tokenUtils = ace.acequire('ace/autocomplete/util');
 const { textCompleter, keyWordCompleter, snippetCompleter } = langTools;
@@ -26,7 +26,6 @@ const defaultCompleters = [textCompleter, keyWordCompleter, snippetCompleter];
 
 const escChars = term => term.replace('$', '\\$').replace('#', '\\#');
 const isAttribFunction = term => /[a-zA-Z]+\([^)]*\)(\.[^)]*\))?/g.test(term);
-
 const createSuggestionItem = (key, namespace, lvl = 0, meta = '') => ({
   caption: key,
   value: key,
@@ -460,8 +459,6 @@ class ContentTemplateForm extends Component {
         });
     }
 
-
-
     findTokenInDictMap = (token, parentToken) => {
         this.prevToken = token;
         const { dictMapped } = this.state;
@@ -530,7 +527,7 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-12">
                             <legend style={{ fontSize: "12px", color: '#d1d1d1' }}>
                                 <div className="text-right">
-                                    * <span>Required Fields</span>
+                                    * <span><FormattedMessage id="app.requiredFields" /></span>
                                 </div>
                             </legend>
                         </div>
@@ -539,20 +536,21 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2 text-right">
                             <label htmlFor="type" className="control-label">
                                 <span className="FormLabel">
-                                    <span>Type</span>
+                                <span><FormattedMessage id="app.type" /></span>
                                     <sup>
                                         <i className="fa fa-asterisk required-icon FormLabel__required-icon"></i>
                                     </sup>
                                 </span>
                             </label>
-                            <FieldLevelHelp buttonClass="" close={undefined} content="Select one existing collection type to use for the content template." inline placement="right" rootClose />
+                            <FieldLevelHelp buttonClass="" close={undefined} content= {this.props.intl. formatMessage({ id: "app.selectOneExistingCollectionTypeToUseForTheContentTemplate" })} inline placement="right" rootClose />
                         </div>
                         <div className={`col-lg-10`}>
-                            <Typeahead
+                             <Typeahead
                                 id="basic-typeahead-multiple"
                                 onChange={this.handleTypeHeadChange}
                                 options={this.state.contentTypes}
-                                placeholder="Choose..."
+                                placeholder={this.props.intl.formatMessage({ id: "app.choose" })}
+                                emptyLabel={this.props.intl.formatMessage({id:"app.noMatchesFound"})}
                                 selected={this.state.selectedContentType}
                                 className={this.state.errorObj.type.message && 'has-error'}
                                 onBlur={() => this.onBlurHandler(ELE_TYPE.TYPE)}
@@ -569,11 +567,11 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2 text-right">
                             <label htmlFor="name" className="control-label">
                                 <span className="FormLabel">
-                                    <span>Name</span>
+                                <span><FormattedMessage id="app.name" /></span>
                                     <sup>
                                         <i className="fa fa-asterisk required-icon FormLabel__required-icon"></i>
                                     </sup>
-                                    <FieldLevelHelp buttonClass="" close={undefined} content="You can insert up to 50 characters, including upper or lower case letters, numbers and special characters." inline placement="right" rootClose />
+                                    <FieldLevelHelp buttonClass="" close={undefined} content={this.props.intl. formatMessage({ id: "app.youCanInsertUpTo50Characters,IncludingUpperOrLowerCaseLettersNumbersAndSpecialCharacters" })}  inline placement="right" rootClose />
                                 </span>
                             </label>
                         </div>
@@ -603,11 +601,11 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2 text-right">
                             <label htmlFor="attributes" className="control-label">
                                 <span className="FormLabel">
-                                    <span> Attributes</span>
+                                <span><FormattedMessage id="app.attributes" /> </span>
                                     <sup>
                                         <i className="fa fa-asterisk required-icon FormLabel__required-icon"></i>
                                     </sup>
-                                    <FieldLevelHelp buttonClass="" close={undefined} content="Provides the attributes list for the selected collection type." inline placement="right" rootClose />
+                                    <FieldLevelHelp buttonClass="" close={undefined} content={this.props.intl.formatMessage({ id: "app.providesTheAttributesListForTheSelectedCollectionType" })} inline placement="right" rootClose />
                                 </span>
                             </label>
                         </div>
@@ -616,8 +614,8 @@ class ContentTemplateForm extends Component {
                             <table className="table dataTable table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Code</th>
-                                        <th>Type</th>
+                                        <th><FormattedMessage id="app.code" /></th>
+                                        <th><FormattedMessage id="app.type" /></th>
                                         {/* TODO: Hided Roles for time being. */}
                                         {/* <th>Roles</th> */}
                                     </tr>
@@ -636,18 +634,18 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2 text-right">
                             <label htmlFor="modal" className="control-label">
                                 <span className="FormLabel">
-                                    <span>HTML Model</span>
+                                    <span><FormattedMessage id="app.htmlModel" /></span>
                                     <sup>
                                         <i className="fa fa-asterisk required-icon FormLabel__required-icon"></i>
                                     </sup>
-                                    <FieldLevelHelp buttonClass="" close={undefined} content="Defines the HTML content structure using the content elements defined by the given collection type." inline placement="right" rootClose />
+                                    <FieldLevelHelp buttonClass="" close={undefined} content={this.props.intl.formatMessage({ id: "app.definesTheHTMLContentStructureUsingTheContentElementsDefinedByTheGivenCollectionType" })} inline placement="right" rootClose />
                                 </span>
                             </label>
                         </div>
                         <div className="col-lg-10">
                             <button type="button" onClick={() => this.setState({ modalShow: true })} className="btn-default btn" style={{
                                 color: "black"
-                            }}>Inline editing assistant</button>
+                            }}><FormattedMessage id="app.inlineEditingAssistant" /></button>
                         </div>
                     </div>
                     <div className="formContainer col-xs-12 form-group">
@@ -680,7 +678,7 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2">
                         </div>
                         <div className="col-lg-10">
-                            <span>(press ctrl + space to open content assist menu)</span>
+                            <span><FormattedMessage id="app.pressCtrlSpaceToOpenContentAssistMenu" /></span>
                         </div>
 
                         <div className="col-lg-2">
@@ -697,8 +695,8 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2 text-right">
                             <label htmlFor="stylesheet" className="control-label">
                                 <span className="FormLabel">
-                                    <span>Style Sheet</span>
-                                    <FieldLevelHelp buttonClass="" close={undefined} content="Provides a stylesheet file to be used with the HTML model." inline placement="right" rootClose />
+                                <span><FormattedMessage id="app.styleSheet" /></span>
+                                    <FieldLevelHelp buttonClass="" close={undefined} content={this.props.intl.formatMessage({ id: "app.providesAStylesheetFileToBeUsedWithTheHTMLModel"})} inline placement="right" rootClose />
                                 </span>
                             </label>
                         </div>
@@ -723,21 +721,20 @@ class ContentTemplateForm extends Component {
                             }
                         </div>
                     </div>
-
                 </form>
 
-                <ModalUI modalShow={this.state.modalShow} modalHide={this.modalHide} title={"Inline editing assistant"} cancelButtonLabel={CLOSE_LABEL}>
+                <ModalUI modalShow={this.state.modalShow} modalHide={this.modalHide} title={<FormattedMessage id="app.inlineEditingAssistan" />} cancelButtonLabel={CLOSE_LABEL}>
                     <span>
-                        Provides an example on how to activate <strong>INLINE EDITING</strong> for Entando labels<br /><br />
+                    <FormattedMessage id="app.providesAnExampleOnHowToActivate" /> <strong>style sheet INLINE EDITING </strong><FormattedMessage id="app.forEntandolabels" /> <br /><br />
                         <ol>
-                            <li> Open a <strong>TAG</strong> like div p span... </li>
-                            <li> add the class <strong>'editContent'</strong> to the TAG. Keep in mind that <strong>'editContentText'</strong> class can be used in case of a text-area. </li>
-                            <li>then add <strong>data-content-id="$content.getId()"</strong> </li>
-                            <li>then add the attribute ID (TITLE) of the desidered label adding <strong>data-attr-id="TITLE"</strong> and close the tag with &gt;. Please be careful when writing the attribute ID as it is <strong>case sensitive</strong> and it must match the label attribute in the next step </li>
-                            <li>finally add the label of the desidered attribute that will be rendered on screen writing <strong>$content.TITLE.text</strong>.</li>
-                            <li>Close the <strong>TAG</strong> (div p span ...) opened at the very beginning.</li>
+                            <li><FormattedMessage id="app.openA" /> <strong>TAG </strong> <FormattedMessage id="app.likeDivPSpan" /></li>
+                            <li><FormattedMessage id="app.addTheClass" />  <strong>' editContent '</strong><FormattedMessage id="app.toTheTAGKeepInMindThat" />  <strong>'editContentText'</strong> <FormattedMessage id="app.classCanBeUsedInCaseOfATextArea" />  </li>
+                            <li><FormattedMessage id="app.thenAdd" />  <strong>data-content-id="$content.getId()"</strong> </li>
+                            <li><FormattedMessage id="app.thenAddTheAttributeIdTitleOfTheDesideredLabelAdding" />  <strong><FormattedMessage id='app.dataAttrIdTitle' /> </strong> <FormattedMessage id="app.andCloseTheTagWith" />  &gt;. <FormattedMessage id="app.pleaseBeCarefulWhenWritingTheAttributeIDasitis" />  <strong><FormattedMessage id="app.caseSensitive" /></strong> <FormattedMessage id="app.andItMustMatchTheLabelAttributeInTheNextStep" /> </li>
+                            <li><FormattedMessage id="app.finallyAddTheLabelOfTheDesideredAttributeThatWillBeRenderedOnScreenWriting" /> <strong>$content.TITLE.text"</strong>.</li>
+                            <li><FormattedMessage id="app.closeThe" /> <strong>TAG</strong> <FormattedMessage id="app.divPSpanOpenedAtTheVeryBeginning" /></li>
                         </ol>
-                        Result should look like this:<br /><br /> OPEN TAG class="editContent" data-content-id="$content.getId()" data-attr-id="TITLE"&gt;<br />$content.TITLE.text<br />CLOSE TAG
+                        <FormattedMessage id="app.resultShouldLookLikeThis" /> <br /><br /> OPEN TAG class="editContent" data-content-id="$content.getId()" data-attr-id="TITLE"' &gt;<br />$content.TITLE.text" <br /> CLOSE TAG
                     </span>
                 </ModalUI>
             </div>
@@ -745,4 +742,4 @@ class ContentTemplateForm extends Component {
     }
 }
 
-export default withRouter(ContentTemplateForm);
+export default withRouter(injectIntl(ContentTemplateForm));

@@ -1,7 +1,7 @@
 /*********************
  * Pagination ********
  *********************/
-
+ import { FormattedMessage } from "react-intl";
 export const PERPAGEOPTIONS = [5, 10, 15, 25, 50];
 export const PAGE= 1;
 export const PAGESIZE= 5;
@@ -14,31 +14,32 @@ export const PAGECHANGEVALUE= 1;
  * Messages **********
  *********************/
 
-export const NO_TEMPLATE_FOUND = "No template found.";
-export const DEL_TEMPLATE_CONFIRM_MSG = 'Do you really want to delete ?';
-export const TEMPLATE_CREATED_SUCCESSFULLY_MSG = 'Template created successfully';
-export const SOMETHING_WENT_WRONG_MSG = 'Something went wrong, please try again.'
-export const TEMPLATE_UPDATED_MSG = 'Template updated successfully';
-
-export const ADD_LABEL = 'Add';
-export const ADD_TEMP_LABEL = 'Add content template';
-export const EDIT_TEMP_LABEL = 'Edit content template';
-export const DELETE_LABEL = 'Delete';
-export const EDIT_LABEL = 'Edit';
-export const CLOSE_LABEL = 'Close';
-export const CANCEL_LABEL = 'Cancel';
-export const SAVE_LABEL = 'Save';
+export const NO_TEMPLATE_FOUND = <FormattedMessage id="app.noTemplateFound." />;
+export const DEL_TEMPLATE_CONFIRM_MSG = <FormattedMessage id="app.doYouReallyWanttoDelete" />;
+export const TEMPLATE_DELETED_MSG = <FormattedMessage id="app.templateDeletedSuccessfully"/>;
+export const TEMPLATE_CREATED_SUCCESSFULLY_MSG =  <FormattedMessage id="app.templateCreatedSuccessfully" />;
+export const SOMETHING_WENT_WRONG_MSG =  <FormattedMessage id="app.somethingWentwrongPleaseTryAgain" />;
+export const TEMPLATE_UPDATED_MSG = <FormattedMessage id="app.templateUpdatedSuccessfully" />;
+export const ADD_LABEL = <FormattedMessage id="app.add" />
+export const ADD_TEMP_LABEL = <FormattedMessage id="app.addContentTemplate" />
+export const EDIT_TEMP_LABEL = <FormattedMessage id="app.editContentTemplate" />
+export const DELETE_LABEL = <FormattedMessage id="app.delete" />
+export const EDIT_LABEL = <FormattedMessage id="app.edit" />
+export const CLOSE_LABEL =<FormattedMessage id="app.close" />
+export const CANCEL_LABEL = <FormattedMessage id="app.cancel" />
+export const SAVE_LABEL = <FormattedMessage id="app.save" />
 
 /*********************
  * Error Messages ****
  *********************/
-export const MIN3CHAR = "Min 3 Char";
-export const MAX25CHAR = "Max 3 Char";
-export const NAMEREQ = "Name Required";
-export const EDITORCODINGREQ = "Editor Coding Required";
-export const TYPE_REQ = "Type required";
-export const FIELD_REQ = "It is a mandatory field";
-export const MAX50CHAR = "Must be 50 characters or less";
+
+export const MIN3CHAR = <FormattedMessage id="app.min3Char" />
+export const MAX25CHAR = <FormattedMessage id="app.max3Char" />
+export const NAMEREQ = <FormattedMessage id="app.nameRequired" />
+export const EDITORCODINGREQ = <FormattedMessage id="app.editorCodingRequired " />
+export const TYPE_REQ = <FormattedMessage id="app.typeRequired" />
+export const FIELD_REQ = <FormattedMessage id="app.itIsAMandatoryField" />
+export const MAX50CHAR = <FormattedMessage id="app.mustBe50CharactersOrLess" />
 
 export const ELE_TYPE = {
     NAME: "name",
