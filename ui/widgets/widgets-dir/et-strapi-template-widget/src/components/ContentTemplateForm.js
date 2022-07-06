@@ -66,6 +66,7 @@ class ContentTemplateForm extends Component {
             attributesListJson: {},
             attributesListArray : [],
             formType: this.props.formType,
+            saveStatus: false,
             errorObj: {
                 name: {
                     message: '',
@@ -195,6 +196,7 @@ class ContentTemplateForm extends Component {
                 notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
                 notificationObj.message = TEMPLATE_CREATED_SUCCESSFULLY_MSG;
                 notificationObj.timerdelay = NOTIFICATION_TIMER_SUCCESS;
+                this.setState({saveStatus:true});
                 this.props.history.push('/');
             }
             this.props.addNotification(notificationObj);
@@ -522,7 +524,7 @@ class ContentTemplateForm extends Component {
                                 <Link to="/">
                                     <button className="btn-default btn">{CANCEL_LABEL}</button>
                                 </Link>
-                                <button className="btn-primary btn" type="submit" disabled={!(this.state.errorObj.name.valid && this.state.errorObj.editorCoding.valid && this.state.errorObj.type.valid)} style={{ marginLeft: "1vw" }}>{SAVE_LABEL}</button>
+                                <button className="btn-primary btn" type="submit" disabled={this.state.saveStatus || !( this.state.errorObj.name.valid && this.state.errorObj.editorCoding.valid && this.state.errorObj.type.valid)} style={{ marginLeft: "1vw" }}>{SAVE_LABEL}</button>
                             </div>
                         </div>
                     </div>

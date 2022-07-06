@@ -216,8 +216,8 @@ class TemplateDataTable extends Component {
                                 itemsEnd={itemsEnd}
                                 viewType="table"
                                 pagination={pagination}
-                                amountOfPages={this.state.lastPage}
-                                pageInputValue={this.state.currPageWillUpdating}
+                                amountOfPages={!this.state.lastPage ? 1 : this.state.lastPage}
+                                pageInputValue={!this.state.currPageWillUpdating ? 1 : this.state.currPageWillUpdating}
                                 onPageSet={this.changePage}
                                 onPerPageSelect={this.onPerPageSelect}
                                 onFirstPage={() => this.changePage(1)}
