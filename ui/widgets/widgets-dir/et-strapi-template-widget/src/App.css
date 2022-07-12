@@ -87,3 +87,8 @@
 .content-view-pf-pagination .form-group {
     align-items: normal !important;
 }
+
+.olCustomList {
+    list-style: auto !important;
+    padding: 1.8rem !important;
+}

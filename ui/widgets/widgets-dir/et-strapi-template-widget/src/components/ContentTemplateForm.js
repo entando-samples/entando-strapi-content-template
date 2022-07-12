@@ -155,6 +155,7 @@ class ContentTemplateForm extends Component {
     }
 
     handleSubmit = async (event) => {
+        this.setState({saveStatus: true});
         event.preventDefault();
         let notificationObj = NOTIFICATION_OBJECT;
         notificationObj.key = uuidv4();
@@ -195,7 +196,6 @@ class ContentTemplateForm extends Component {
                 notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
                 notificationObj.message = TEMPLATE_CREATED_SUCCESSFULLY_MSG;
                 notificationObj.timerdelay = NOTIFICATION_TIMER_SUCCESS;
-                this.setState({saveStatus:true});
                 this.props.history.push('/');
             }
             this.props.addNotification(notificationObj);
@@ -508,6 +508,10 @@ class ContentTemplateForm extends Component {
     }
     // =================== END: Coding of React-Ace ==============
 
+    saveBtnStatus = () => {
+        return this.state.errorObj.name.valid && this.state.errorObj.editorCoding.valid && this.state.errorObj.type.valid && !this.state.saveStatus;
+    }
+
     render() {
         return (
             <div className="container-fluid" style={{ marginTop: "2vw" }}>
@@ -521,7 +525,7 @@ class ContentTemplateForm extends Component {
                                 <Link to="/">
                                     <button className="btn-default btn">{CANCEL_LABEL}</button>
                                 </Link>
-                                <button className="btn-primary btn" type="submit" disabled={this.state.saveStatus || !( this.state.errorObj.name.valid && this.state.errorObj.editorCoding.valid && this.state.errorObj.type.valid)} style={{ marginLeft: "1vw" }}>{SAVE_LABEL}</button>
+                                <button className="btn-primary btn" type="submit" disabled={!this.saveBtnStatus()} style={{ marginLeft: "1vw" }}>{SAVE_LABEL}</button>
                             </div>
                         </div>
                     </div>
@@ -731,7 +735,7 @@ class ContentTemplateForm extends Component {
                 <ModalUI modalShow={this.state.modalShow} modalHide={this.modalHide} title={<FormattedMessage id="app.inlineEditingAssistan" />} cancelButtonLabel={CLOSE_LABEL}>
                     <span>
                         <FormattedMessage id="app.providesAnExampleOnHowToActivate" /> <strong>INLINE EDITING </strong><FormattedMessage id="app.forEntandolabels" /> <br /><br />
-                        <ol>
+                        <ol className="olCustomList">
                             <li><FormattedMessage id="app.openA" /> <strong>TAG </strong> <FormattedMessage id="app.likeDivPSpan" /></li>
                             <li><FormattedMessage id="app.addTheClass" />  <strong>' editContent '</strong><FormattedMessage id="app.toTheTAGKeepInMindThat" />  <strong>'editContentText'</strong> <FormattedMessage id="app.classCanBeUsedInCaseOfATextArea" />  </li>
                             <li><FormattedMessage id="app.thenAdd" />  <strong>data-content-id="$content.getId()"</strong> </li>
