@@ -57,9 +57,9 @@ class TemplateDataTable extends Component {
             prevState.pageSize !== this.state.pageSize) {
             await this.getTemplates(this.props.selectedCollectionType, true).then(res => {
                 if (this.state.templateData.length) {
-                    this.setState({currPageWillUpdating: PAGE})
+                    this.setState({ currPageWillUpdating: PAGE })
                 } else {
-                    this.setState({currPageWillUpdating: 0})
+                    this.setState({ currPageWillUpdating: 0 })
                 }
             });
         }
@@ -73,7 +73,7 @@ class TemplateDataTable extends Component {
     /**
      * Method to delete a template
      */
-     handleDelete = async () => {
+    handleDelete = async () => {
         let notificationObj = NOTIFICATION_OBJECT;
         notificationObj.key = uuidv4(),
         await deleteTemplate(this.state.selectedTempate.id).then((res) => {
@@ -160,7 +160,8 @@ class TemplateDataTable extends Component {
                             </Link>
                         </div>
                         <div className="col-lg-12">
-                            <table className="table dataTable table-striped table-bordered table-hover">
+                            {/* <table className="table dataTable table-striped table-bordered table-hover"> */}
+                            <table className="table table-striped table-bordered table-hover" style={{ marginBottom: "0px" }}>
                                 <thead>
                                     <tr>
                                         <th width="45%"><FormattedMessage id="app.name" /></th>
@@ -178,7 +179,7 @@ class TemplateDataTable extends Component {
                                                 <td>{el.id}</td>
                                                 <td>
                                                     <DropdownKebab
-                                                        className=""
+                                                        // className="mykebabmenu"
                                                         // componentClass={function noRefCheck() { }}
                                                         id={el.id}
                                                         pullRight={true}

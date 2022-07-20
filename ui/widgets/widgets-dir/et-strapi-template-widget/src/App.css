@@ -73,3 +73,22 @@
     font-size: 57.6px;
     line-height: 57.6px;
 }
+
+.ignore_height {
+    height: 4% !important
+}
+
+/* .mykebabmenu:after {
+    content: '\2807';
+    font-size: 20px;
+} */
+
+/* TODO: BY VJ */
+.content-view-pf-pagination .form-group {
+    align-items: normal !important;
+}
+
+.olCustomList {
+    list-style: auto !important;
+    padding: 1.8rem !important;
+}
