@@ -10,6 +10,8 @@ import { TimedToastNotification, ToastNotificationList } from 'patternfly-react'
 import { IntlProvider } from "react-intl";
 import en from "./en.js";
 import it from "./it.js";
+import { STRAPI_BASE_URL_KEY } from './constant/constant';
+import StrapiConfigWarning from './pages/StrapiConfigWarning';
 
 export default class App extends Component {
   constructor(props) {
@@ -80,15 +82,19 @@ export default class App extends Component {
             })
           }
         </ToastNotificationList>
-        <HashRouter>
-          <Switch>
-            <Route path="/" exact>
-              <ListContentTemplates addNotification={this.addNotification} />
-            </Route>
-            <Route path="/add-template" exact><AddContentTemplate addNotification={this.addNotification} /></Route>
-            <Route path="/edit-template/:templateId" exact><EditContentTemplate addNotification={this.addNotification} /></Route>
-          </Switch>
-        </HashRouter>
+          {localStorage.getItem(STRAPI_BASE_URL_KEY)
+            ?
+            <HashRouter>
+              <Switch>
+                <Route path="/" exact>
+                  <ListContentTemplates addNotification={this.addNotification} />
+                </Route>
+                <Route path="/add-template" exact><AddContentTemplate addNotification={this.addNotification} /></Route>
+                <Route path="/edit-template/:templateId" exact><EditContentTemplate addNotification={this.addNotification} /></Route>
+              </Switch>
+            </HashRouter>
+            :
+            <StrapiConfigWarning />}
       </div>
       </IntlProvider>
     )

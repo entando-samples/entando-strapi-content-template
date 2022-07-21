@@ -197,4 +197,8 @@ export const KC_TOKEN_PREFIX = 'EntKcToken';
 export const STRAPI_CONTYPE_URL = 'http://localhost:1337/content-manager/content-types';
 export const STRAPI_COLTYPE_URL = 'http://localhost:1337/content-manager/collection-types/';
 
+export const STRAPI_BASE_URL_KEY = 'STRAPI_CONFIG';
+export const STRAPI_URL = 'http://20.113.131.137:1337'
+export const BTN_RELOAD_PAGE = 'Reload Page';
+
 export const REACT_APP_LOCAL_STRAPI_TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjUwOTY1ODU1LCJleHAiOjE2NTM1NTc4NTV9.JAwQ2tS16tJsyo8a8WKNA7nXGLRsOCDJeVXBHs-MwL8'
