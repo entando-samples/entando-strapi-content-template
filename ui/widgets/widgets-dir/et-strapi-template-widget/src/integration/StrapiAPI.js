@@ -1,15 +1,13 @@
 import axios from "axios";
-import { KC_TOKEN_PREFIX } from "../constant/constant";
+import { KC_TOKEN_PREFIX, STRAPI_BASE_URL_KEY } from "../constant/constant";
 import { addAuthorizationRequestConfig } from "./Integration";
-
-const strapiBaseUrl = `${process.env.REACT_APP_STRAPI_API_URL}`;
 
 /**
  * Get strapi content types
  * @returns
  */
 export const getStrapiContentTypes = async () => {
-    const url = `${strapiBaseUrl}/content-manager/content-types`;
+    const url = `${await fetchStrapiBaseUrl()}/content-manager/content-types`;
     const data = await axios.get(url, addAuthorizationRequestConfig({}, KC_TOKEN_PREFIX));
     return data;
 }
@@ -20,6 +18,7 @@ export const getStrapiContentTypes = async () => {
  * @returns
  */
 export const getFields = async (contentType) => {
+    const strapiBaseUrl = await fetchStrapiBaseUrl();
     const STRAPI_COLTYPE_URL = `${strapiBaseUrl}/content-manager/collection-types/`;
     const { data: { results } } = await axios.get(`${STRAPI_COLTYPE_URL}${contentType}`, addAuthorizationRequestConfig({}, KC_TOKEN_PREFIX));
     const getContentTypeObj = await getContentTypes(contentType.split('.')[contentType.split('.').length - 1]);
@@ -58,7 +57,7 @@ export const getFields = async (contentType) => {
 let mutableDataObj = {};
 
 export const getAttributes = async (contentType) => {
-    const STRAPI_COLTYPE_URL = `${strapiBaseUrl}/content-manager/collection-types/`;
+    const STRAPI_COLTYPE_URL = `${await fetchStrapiBaseUrl()}/content-manager/collection-types/`;
     const { data: { results } } = await axios.get(`${STRAPI_COLTYPE_URL}${contentType}`, addAuthorizationRequestConfig({}, KC_TOKEN_PREFIX));
     if (results && results.length) {
         const fieldsArr = Object.keys(results[0]);
@@ -73,6 +72,7 @@ export const getAttributes = async (contentType) => {
  * @returns
  */
 export const getContentTypes = async (conType) => {
+    const strapiBaseUrl = await fetchStrapiBaseUrl();
     const { data: { data: contentTypesList } } = await axios.get(`${strapiBaseUrl}/content-type-builder/content-types`, addAuthorizationRequestConfig({}, KC_TOKEN_PREFIX));
     const filteredContentType = contentTypesList.filter(el => el.uid.startsWith('api::'));
     const { data: { data: componentsList } } = await axios.get(`${strapiBaseUrl}/content-type-builder/components`, addAuthorizationRequestConfig({}, KC_TOKEN_PREFIX));
@@ -136,4 +136,64 @@ function filterBy(componentsList, element) {
     return (
         componentsList.filter(el => element.component.split('.')[element.component.split('.').length - 1] === el.uid.split('.')[el.uid.split('.').length - 1])
     );
+}
+
+
+/**
+ * Get strapi configurations
+ * @returns
+ */
+ export const getStrapiConfigurations = async () => {
+    const result = await axios.get(process.env.REACT_APP_STRAPI_CONFIG_BE_URL)
+        .then((res) => {
+            return res;
+        }).catch((e) => {
+            return e;
+        });
+    return errorCheck(result);
+}
+
+/**
+ * Check if the given url is available
+ * @param {*} url 
+ * @returns 
+ */
+export const checkIfUrlExists = async (url) => {
+    const result = await axios.head(url)
+        .then((res) => {
+            return res;
+        }).catch((e) => {
+            return e;
+        });
+    return errorCheck(result);
+}
+
+/**
+ * Get strapi configuration from local storage
+ * @returns 
+ */
+export const fetchStrapiBaseUrl = async () => {
+    const strapiBaseUrl = localStorage.getItem(STRAPI_BASE_URL_KEY);
+    if (!strapiBaseUrl) {
+        const { data, isError } = await getStrapiConfigurations();
+        if (!isError && data && data.data && data.data.baseUrl) {
+            const result = await checkIfUrlExists(data.data.baseUrl);
+            if (result && result.data && result.data.status === 200 && !result.isError) {
+                localStorage.setItem(STRAPI_BASE_URL_KEY, data.data.baseUrl);
+                return data.data.baseUrl;
+            }
+        }
+    }
+    return strapiBaseUrl;
+}
+
+const errorCheck = (data) => {
+    let isError = false
+    if (data.hasOwnProperty("toJSON") && data.toJSON().name === "Error") {
+        isError = true
+    }
+    return {
+        data,
+        isError,
+    }
 }
