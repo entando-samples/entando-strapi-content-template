@@ -44,14 +44,6 @@ class EtApp extends HTMLElement {
         })
     }
 
-    renderAfterConnectedCallback() {
-        ReactDOM.render(<App config={this.#config} />, this.appendChild(this.mountPoint))
-    }
-
-    renderAfterAttributeChangedCallback() {
-        ReactDOM.render(<App ref={this.reactRootRef} config={this.#config} />, this.mountPoint);
-    }
-
     /**
      * Get strapi configurations
      */
@@ -65,9 +57,9 @@ class EtApp extends HTMLElement {
             }
         }
         if (isConnectedCallback) {
-            this.renderAfterConnectedCallback();
+            ReactDOM.render(<App config={this.#config} />, this.appendChild(this.mountPoint));
         } else {
-            this.renderAfterAttributeChangedCallback();
+            ReactDOM.render(<App ref={this.reactRootRef} config={this.#config} />, this.mountPoint);
         }
     }
 }
