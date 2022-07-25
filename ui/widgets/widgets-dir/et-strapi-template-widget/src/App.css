@@ -73,3 +73,82 @@
     font-size: 57.6px;
     line-height: 57.6px;
 }
+
+/* style ContentTemplateForm.js */
+.tw-ctf-heading {
+    margin: auto;
+}
+
+.tw-ctf-container-fluid-margin {
+    margin-top: 2vw;
+}
+
+.tw-ctf-formContainer-margin {
+    margin-bottom: 2em;
+}
+
+.tw-ctf-save-btn {
+    margin-left: 1vw;
+}
+
+.tw-ctf-legend {
+    font-size: 12px;
+    color: #d1d1d1;
+}
+
+.tw-ctf-inlineEditingAssistant-btn {
+    color: black;
+}
+
+.tw-ctf-aceEditor {
+    border-style: solid;
+    border-color: silver;
+    border-width: thin;
+}
+
+/* style TemplateDataTable.js */
+
+.word-break {
+    word-break: break-word;
+}
+
+/* style TemplateSearch.js */
+
+.tw-search-btn-mainDiv {
+    margin-top: 1rem;
+}
+
+.tw-search-label {
+    font-size: large;
+    font-weight: 500;
+}
+
+.tw-type-label-div {
+    font-size: larger;
+    font-weight: 600;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.tw-search-btn-col-lg-4-div {
+    margin-left: 5rem;
+}
+
+.tw-search-select {
+    height: 100%;
+    margin-left: 2rem;
+}
+
+.tw-search-show-grid-row-div {
+    height: 3.2rem;
+}
+
+.tw-search-well-div {
+    height: 15rem;
+}
+
+.tw-search-container-div {
+    position: relative;
+    z-index: "0";
+}

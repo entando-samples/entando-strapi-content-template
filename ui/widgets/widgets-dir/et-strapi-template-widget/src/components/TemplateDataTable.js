@@ -22,6 +22,7 @@ class TemplateDataTable extends Component {
         this.state = {
             templateData: [],
             modalShow: false,
+            loadingData:false,
             loading: true,
             selectedTempate: null,
             page: PAGE,
@@ -57,9 +58,9 @@ class TemplateDataTable extends Component {
             prevState.pageSize !== this.state.pageSize) {
             await this.getTemplates(this.props.selectedCollectionType, true).then(res => {
                 if (this.state.templateData.length) {
-                    this.setState({currPageWillUpdating: PAGE})
+                    this.setState({ currPageWillUpdating: PAGE })
                 } else {
-                    this.setState({currPageWillUpdating: 0})
+                    this.setState({ currPageWillUpdating: 0 })
                 }
             });
         }
@@ -73,38 +74,41 @@ class TemplateDataTable extends Component {
     /**
      * Method to delete a template
      */
-     handleDelete = async () => {
+    handleDelete = async () => {
         let notificationObj = NOTIFICATION_OBJECT;
         notificationObj.key = uuidv4(),
-        await deleteTemplate(this.state.selectedTempate.id).then((res) => {
-            this.componentDidMount();
-            this.modalHide();
-            if(res.isError) {
-                notificationObj.type = NOTIFICATION_TYPE.ERROR;
-                notificationObj.message = res.errorBody.response.data.message;
-                notificationObj.timerdelay = NOTIFICATION_TIMER_ERROR;
-            } else {
-                notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
-                notificationObj.message = TEMPLATE_DELETED_MSG;
-            }
-            this.props.addNotification(notificationObj);
-        });
+            await deleteTemplate(this.state.selectedTempate.id).then((res) => {
+                this.componentDidMount();
+                this.modalHide();
+                if (res.isError) {
+                    notificationObj.type = NOTIFICATION_TYPE.ERROR;
+                    notificationObj.message = res.errorBody.response.data.message;
+                    notificationObj.timerdelay = NOTIFICATION_TIMER_ERROR;
+                } else {
+                    notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
+                    notificationObj.message = TEMPLATE_DELETED_MSG;
+                }
+                this.props.addNotification(notificationObj);
+            });
     }
 
     async getTemplates(selectedCollectionType, shouldInitPage = false) {
+        this.setState({loadingData: true});
         const data = await getAllTemplates(shouldInitPage ? 1 : this.state.page, this.state.pageSize, selectedCollectionType);
         if (data || !isError) {
             const { payload } = data.templateList;
             const { lastPage, page, pageSize, totalItems } = data.templateList.metadata;
+            this.props.setLoading(false);
             this.setState({
                 templateData: payload,
-                loading: false,
+                // loading: false,
                 lastPage: lastPage,
                 page: page,
                 pageSize: pageSize,
                 totalItems: totalItems
             });
         }
+        this.setState({loadingData: false});
     }
 
     changePage(page) {
@@ -148,7 +152,7 @@ class TemplateDataTable extends Component {
                         className=""
                         inline={false}
                         inverse={false}
-                        loading={this.state.loading}
+                        loading={this.props.loadingState || this.state.loadingData}
                         size="lg"
                     >
                         <div className="col-lg-11"></div>
@@ -239,7 +243,7 @@ class TemplateDataTable extends Component {
                                 <div className="exclamation_icon">
                                     <span aria-hidden="true" className="fa fa-exclamation"></span>
                                 </div>
-                                <h2><FormattedMessage id="app.delete" /> <b style={{ wordBreak: "break-word" }}> {this.state.selectedTempate && this.state.selectedTempate.templateName && this.state.selectedTempate.templateName} </b></h2>
+                                <h2><FormattedMessage id="app.delete" /> <b className="word-break"> {this.state.selectedTempate && this.state.selectedTempate.templateName && this.state.selectedTempate.templateName} </b></h2>
                                 <h3> {DEL_TEMPLATE_CONFIRM_MSG} </h3>
                             </span>
                         </div>
