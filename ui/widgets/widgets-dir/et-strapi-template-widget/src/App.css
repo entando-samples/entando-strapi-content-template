@@ -147,4 +147,21 @@
 .well-container-position {
     position: relative;
     z-index: "0";
+.ignore_height {
+    height: 4% !important
+}
+
+/* .mykebabmenu:after {
+    content: '\2807';
+    font-size: 20px;
+} */
+
+/* TODO: BY VJ */
+.content-view-pf-pagination .form-group {
+    align-items: normal !important;
+}
+
+.olCustomList {
+    list-style: auto !important;
+    padding: 1.8rem !important;
 }
