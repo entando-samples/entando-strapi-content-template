@@ -114,16 +114,12 @@
 
 /* style TemplateSearch.js */
 
-.tw-search-btn-mainDiv {
-    margin-top: 1rem;
-}
-
-.tw-search-label {
+.search-label-size {
     font-size: large;
     font-weight: 500;
 }
 
-.tw-type-label-div {
+.tw-type-label {
     font-size: larger;
     font-weight: 600;
     position: relative;
@@ -131,24 +127,24 @@
     transform: translateY(-50%)
 }
 
-.tw-search-btn-col-lg-4-div {
+.ml-5 {
     margin-left: 5rem;
 }
 
-.tw-search-select {
+.tw-search {
     height: 100%;
     margin-left: 2rem;
 }
 
-.tw-search-show-grid-row-div {
+.tw-search-box-height {
     height: 3.2rem;
 }
 
-.tw-search-well-div {
+.well-height {
     height: 15rem;
 }
 
-.tw-search-container-div {
+.well-container-position {
     position: relative;
     z-index: "0";
 }
