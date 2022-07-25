@@ -67,13 +67,13 @@ public class EntTemplateController {
 	@GetMapping("/paged")
 	@RolesAllowed({ ApplicationConstants.ADMIN })
 	public PagedContent<TemplateResponseView, EntTemplate> getFilteredTemplates(
-			@RequestParam Integer page, @RequestParam Integer pageSize, @RequestParam(required = false) String collectionType) {
+			@RequestParam Integer page, @RequestParam Integer pageSize, @RequestParam(required = false) String templateApiId) {
 		logger.debug("REST request to get paginated templates");
 		Integer sanitizedPageNum = page >= 1 ? page - 1 : 0;
-		String sanitizedCollectionType = StringUtils.isEmpty(collectionType) ? ApplicationConstants.TEMPLATE_SEARCH_PARAM_ALL : collectionType.trim();
+		String sanitizedTemplateApiId = StringUtils.isEmpty(templateApiId) ? ApplicationConstants.TEMPLATE_SEARCH_PARAM_ALL : templateApiId.trim();
 
 		PagedContent<TemplateResponseView, EntTemplate> pagedContent = entTamplateService
-				.getFilteredTemplates(sanitizedPageNum, pageSize, sanitizedCollectionType);
+				.getFilteredTemplates(sanitizedPageNum, pageSize, sanitizedTemplateApiId);
 		return pagedContent;
 	}
 

@@ -16,15 +16,15 @@ public interface EntTemplateRepository extends JpaRepository<EntTemplate, Long> 
 	Page<EntTemplate> findAll(Pageable pageable);
 
 	/**
-	 * Find all templates by collectionType in paginated manner
+	 * Find all templates by templateApiId in paginated manner
 	 * @param code
 	 * @param pageable
 	 * @return
 	 */
-	Page<EntTemplate> findByCollectionType(String collectionType, Pageable pageable);
+	Page<EntTemplate> findByTemplateApiId(String templateApiId, Pageable pageable);
 	
 	/**
-	 * Find all templates by collectionType
+	 * Find all templates by templateApiId
 	 * @param collectionType
 	 * @return
 	 */
