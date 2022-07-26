@@ -49,7 +49,7 @@ export default class TemplateSearch extends Component {
                                 <FormattedMessage id='app.all' >
                                     {(message) => <option value='All'>{message}</option>}
                                 </FormattedMessage>
-                                {this.state.collectionType.map(el => <option key={el.displayName} value={el.displayName}>{el.displayName}</option>)}
+                                {this.state.collectionType.map(el => <option key={el.apiID} value={el.apiID}>{el.displayName}</option>)}
                             </select>
                         </div>
                         <div className="show-grid row mt-1">
