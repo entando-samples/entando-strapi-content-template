@@ -22,12 +22,6 @@ export default class ModalUI extends Component {
                 </Modal.Header>
                 <Modal.Body>
                     {this.props.children}
-                    {/* <h2 className='text-center'>
-                        <strong>
-                            Do you really want to delete this template
-                        </strong>
-                    </h2> */}
-                    {/* {JSON.stringify(this.props.selectedTemp)} ? */}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button
