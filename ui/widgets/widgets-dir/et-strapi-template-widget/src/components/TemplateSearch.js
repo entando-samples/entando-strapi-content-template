@@ -15,12 +15,6 @@ export default class TemplateSearch extends Component {
     }
 
     getCollectionType = async () => {
-        //Remove later
-        // const { data: { data } } = await getCollectionTypes();
-        // if (data.length) {
-        //     const collectionListData = data.filter((el) => el.uid.startsWith('api::') &&  el.isDisplayed);
-        //     this.setState({ collectionType: collectionListData });
-        // }
         const sanitizedCollectionTypes = await getSanitizedCollectionTypes();
         this.setState({ collectionType: sanitizedCollectionTypes });
     }
@@ -30,29 +24,28 @@ export default class TemplateSearch extends Component {
 
     render() {
         return (
-            <div className="well" style={{ height: "15rem" }}>
-                <div style={{ position: "relative", zIndex: "0" }}>
+            <div className="well search-well">
+                <div className="search-container">
                     <div className="container-fluid">
                         <div className="show-grid row">
-                        <div className="col-lg-1" style={{ fontSize: "large", fontWeight: "500" }}><FormattedMessage id="app.search" /></div>
+                            <div className="col-lg-1 search-label"><FormattedMessage id="app.search" /></div>
                             <div className="col-lg-10"></div>
                         </div>
-                        <div className="show-grid row" style={{ height: "3.2rem" }}>
+                        <div className="show-grid row search-show-grid-row">
                             <div className="col-lg-1"></div>
-                            <div className="col-lg-1"
-                                style={{ fontSize: "larger", fontWeight: "600", position: "relative", top: "50%", transform: "translateY(-50%)", }}>
+                            <div className="col-lg-1 type-label">
                                 <FormattedMessage id="app.type" />
                             </div>
-                            <select onChange={this.collectionTypeOnChange} className="col-lg-7" name="cars" id="cars" style={{ height: "100%", marginLeft: '2rem' }}>
+                            <select onChange={this.collectionTypeOnChange} className="col-lg-7 search-select" name="cars" id="cars">
                                 <FormattedMessage id='app.all' >
                                     {(message) => <option value='All'>{message}</option>}
                                 </FormattedMessage>
                                 {this.state.collectionType.map(el => <option key={el.displayName} value={el.displayName}>{el.displayName}</option>)}
                             </select>
                         </div>
-                        <div className="show-grid row" style={{ marginTop: "1rem" }}>
+                        <div className="show-grid row search-btn-main">
                             <div className="col-lg-7"></div>
-                            <div className="col-lg-4" style={{ marginLeft: "5rem" }}>
+                            <div className="col-lg-4 search-btn-col-lg-4">
                                 <button onClick={this.collectionTypeOnClick} className="btn btn-primary"><FormattedMessage id="app.search" /></button>
                             </div>
                         </div>

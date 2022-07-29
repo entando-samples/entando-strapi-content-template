@@ -1,23 +1,13 @@
-import { actionHeaderCellFormatter,
+import {
+    actionHeaderCellFormatter,
 
-    customHeaderFormattersDefinition,
-    
-    defaultSortingOrder,
-    
-    selectionCellFormatter,
-    
+    customHeaderFormattersDefinition, selectionCellFormatter,
+
     selectionHeaderCellFormatter,
-    
-    sortableHeaderCellFormatter,
-    
-    tableCellFormatter,
-    
-    Table,
-    
-    TABLE_SORT_DIRECTION } from 'patternfly-react/dist/js/components/Table';
-// import actionHeaderCellFormatter from 'patternfly-react/dist/js/components/Table/Formatters/actionHeaderCellFormatter';
-import React, { Component } from 'react'
 
+    sortableHeaderCellFormatter, Table, tableCellFormatter, TABLE_SORT_DIRECTION
+} from 'patternfly-react/dist/js/components/Table';
+import React, { Component } from 'react';
 export default class MockClientPaginationTable extends Component {
     static selectRow(row) {
         return Object.assign({}, row, { selected: true });
@@ -28,33 +18,8 @@ export default class MockClientPaginationTable extends Component {
 
     constructor(props) {
         super(props);
-
         const getSortingColumns = () => this.state.sortingColumns || {};
-
-        // const sortableTransform = sort.sort({
-        //     getSortingColumns,
-        //     onSort: selectedColumn => {
-        //         this.setState({
-        //             sortingColumns: sort.byColumn({
-        //                 sortingColumns: this.state.sortingColumns,
-        //                 sortingOrder: defaultSortingOrder,
-        //                 selectedColumn
-        //             })
-        //         });
-        //     },
-        //     // Use property or index dependening on the sortingColumns structure specified
-        //     strategy: sort.strategies.byProperty
-        // });
-
-        // const sortingFormatter = sort.header({
-        //     sortableTransform,
-        //     getSortingColumns,
-        //     strategy: sort.strategies.byProperty
-        // });
-
-        // enables our custom header formatters extensions to reactabular
         this.customHeaderFormatters = customHeaderFormattersDefinition;
-
         this.state = {
             // Sort the first column in an ascending way by default.
             sortingColumns: {
@@ -102,8 +67,6 @@ export default class MockClientPaginationTable extends Component {
                             rowSpan: 1,
                             colSpan: 1
                         },
-                        // transforms: [sortableTransform],
-                        // formatters: [sortingFormatter],
                         customFormatters: [sortableHeaderCellFormatter]
                     },
                     cell: {
@@ -122,8 +85,6 @@ export default class MockClientPaginationTable extends Component {
                             rowSpan: 1,
                             colSpan: 1
                         },
-                        // transforms: [sortableTransform],
-                        // formatters: [sortingFormatter],
                         customFormatters: [sortableHeaderCellFormatter]
                     },
                     cell: {
@@ -142,8 +103,6 @@ export default class MockClientPaginationTable extends Component {
                             rowSpan: 1,
                             colSpan: 1
                         },
-                        // transforms: [sortableTransform],
-                        // formatters: [sortingFormatter],
                         customFormatters: [sortableHeaderCellFormatter]
                     },
                     cell: {
@@ -162,8 +121,6 @@ export default class MockClientPaginationTable extends Component {
                             rowSpan: 1,
                             colSpan: 1
                         },
-                        // transforms: [sortableTransform],
-                        // formatters: [sortingFormatter],
                         customFormatters: [sortableHeaderCellFormatter]
                     },
                     cell: {
@@ -182,8 +139,6 @@ export default class MockClientPaginationTable extends Component {
                             rowSpan: 1,
                             colSpan: 1
                         },
-                        // transforms: [sortableTransform],
-                        // formatters: [sortingFormatter],
                         customFormatters: [sortableHeaderCellFormatter]
                     },
                     cell: {
@@ -234,17 +189,12 @@ export default class MockClientPaginationTable extends Component {
                 }
             ],
 
-            // rows and row selection state
-            // rows: mockRows,
             selectedRows: [],
-
-            // pagination default states
             pagination: {
                 page: 1,
                 perPage: 6,
                 perPageOptions: [6, 10, 15]
             },
-
             // page input value
             pageChangeValue: 1
         };
