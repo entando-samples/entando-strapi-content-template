@@ -42,6 +42,7 @@ export default class Pagination extends Component {
             endingItem: this.state.totalItem,
             currentPage: this.state.numberOfPages
         }, () => {
+            // todo api call
         });
     }
 

@@ -20,7 +20,6 @@ import ModalUI from './ModalUI';
 import { FieldLevelHelp } from 'patternfly-react';
 import { FormattedMessage, injectIntl } from "react-intl";
 import { Spinner } from 'patternfly-react/dist/js/components/Spinner';
-
 const langTools = ace.acequire('ace/ext/language_tools');
 const tokenUtils = ace.acequire('ace/autocomplete/util');
 const { textCompleter, keyWordCompleter, snippetCompleter } = langTools;

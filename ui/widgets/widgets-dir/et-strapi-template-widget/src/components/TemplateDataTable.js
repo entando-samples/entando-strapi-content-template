@@ -241,7 +241,7 @@ class TemplateDataTable extends Component {
                                 <div className="exclamation_icon">
                                     <span aria-hidden="true" className="fa fa-exclamation"></span>
                                 </div>
-                                <h2><FormattedMessage id="app.delete" /> <b className="deleteMsg-h1"> {this.state.selectedTempate && this.state.selectedTempate.templateName && this.state.selectedTempate.templateName} </b></h2>
+                                <h2><FormattedMessage id="app.delete" /> <b className="word-break"> {this.state.selectedTempate && this.state.selectedTempate.templateName && this.state.selectedTempate.templateName} </b></h2>
                                 <h3> {DEL_TEMPLATE_CONFIRM_MSG} </h3>
                             </span>
                         </div>

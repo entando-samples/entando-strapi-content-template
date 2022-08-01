@@ -103,6 +103,10 @@ export default class App extends Component {
     }
   }
 
+  setLoader = (shouldLoad) => {
+    this.setState({ loading: shouldLoad })
+  }
+
   // handleChange = event => {
   //   this.setState({ locale: event.target.value })
   // };
