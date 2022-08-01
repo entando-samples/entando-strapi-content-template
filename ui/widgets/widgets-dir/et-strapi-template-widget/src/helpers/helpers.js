@@ -118,7 +118,7 @@ export const getSanitizedCollectionTypes = async () => {
     if (data.length) {
         data.forEach(element => {
             if(element) {
-                sanitizedCollectionTypes.push(element.info);
+                sanitizedCollectionTypes.push({...element.info, apiID: element.apiID});
             }
         });
     }

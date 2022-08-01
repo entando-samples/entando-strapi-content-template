@@ -78,12 +78,6 @@
     height: 4% !important
 }
 
-/* .mykebabmenu:after {
-    content: '\2807';
-    font-size: 20px;
-} */
-
-/* TODO: BY VJ */
 .content-view-pf-pagination .form-group {
     align-items: normal !important;
 }
@@ -92,3 +86,88 @@
     list-style: auto !important;
     padding: 1.8rem !important;
 }
+/* STYLE ContentTemplateForm.js START */
+
+.container-fluid-margin {
+    margin-top: 2vw;
+}
+
+.formContainer-margin {
+    margin-bottom: 2em;
+}
+
+.ctf-heading {
+    margin: auto;
+}
+
+.ctf-save-btn {
+    margin-left: 1vw;
+}
+
+.ctf-legend {
+    font-size: 12px;
+    color: #d1d1d1;
+}
+
+.inlineEditingAssistant-btn {
+    color: black;
+}
+
+.aceEditor {
+    border-style: solid;
+    border-color: silver;
+    border-width: thin;
+}
+
+/* STYLE ContentTemplateForm.js END */
+
+/* STYLE TemplateDataTable.js START */
+
+.deleteMsg-h1 {
+    word-break: break-word;
+}
+
+/* STYLE TemplateDataTable.js END */
+
+/* STYLE TemplateSearch.js START */
+
+.search-btn-main {
+    margin-top: 1rem;
+}
+
+.search-label {
+    font-size: large;
+    font-weight: 500;
+}
+
+.type-label {
+    font-size: larger;
+    font-weight: 600;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%)
+}
+
+.search-btn-col-lg-4 {
+    margin-left: 5rem;
+}
+
+.search-select {
+    height: 100%;
+    margin-left: 2rem;
+}
+
+.search-show-grid-row {
+    height: 3.2rem;
+}
+
+.search-well {
+    height: 15rem;
+}
+
+.search-container {
+    position: relative;
+    z-index: "0";
+}
+
+/* STYLE TemplateSearch.js END */

@@ -54,7 +54,7 @@ public class EntTamplateService {
 	 * @return
 	 */
 	public PagedContent<TemplateResponseView, EntTemplate> getFilteredTemplates(Integer pageNum,
-			Integer pageSize, String sanitizedCollectionType) {
+			Integer pageSize, String sanitizedTemplateApiId) {
 		logger.debug("{}: getFilteredTemplates: Get templates in paginated manner", CLASS_NAME);
 		Pageable pageable;
 		Page<EntTemplate> page = null;
@@ -67,10 +67,10 @@ public class EntTamplateService {
 		}
 
 		//Check if search parameter is 'all/All/ALL'
-		if(sanitizedCollectionType.equalsIgnoreCase(ApplicationConstants.TEMPLATE_SEARCH_PARAM_ALL)) {
+		if(sanitizedTemplateApiId.equalsIgnoreCase(ApplicationConstants.TEMPLATE_SEARCH_PARAM_ALL)) {
 			page = templateRepository.findAll(pageable);
 		} else {
-			page = templateRepository.findByCollectionType(sanitizedCollectionType, pageable);
+			page = templateRepository.findByTemplateApiId(sanitizedTemplateApiId, pageable);
 		}
 
 		PagedContent<TemplateResponseView, EntTemplate> pagedContent = new PagedContent<>(toResponseViewList(page), page);
@@ -133,6 +133,7 @@ public class EntTamplateService {
 			TemplateResponseView viewObj = new TemplateResponseView();
 			viewObj.setId(entity.getId());
 			viewObj.setCollectionType(entity.getCollectionType());
+			viewObj.setTemplateApiId(entity.getTemplateApiId());
 			viewObj.setTemplateName(entity.getTemplateName());
 			viewObj.setContentShape(entity.getContentShape());
 			viewObj.setStyleSheet(entity.getStyleSheet());

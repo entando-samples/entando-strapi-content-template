@@ -19,6 +19,8 @@ import { addNewTemplate, editTemplate, getTemplateById } from '../integration/Te
 import ModalUI from './ModalUI';
 import { FieldLevelHelp } from 'patternfly-react';
 import { FormattedMessage, injectIntl } from "react-intl";
+import { Spinner } from 'patternfly-react/dist/js/components/Spinner';
+
 const langTools = ace.acequire('ace/ext/language_tools');
 const tokenUtils = ace.acequire('ace/autocomplete/util');
 const { textCompleter, keyWordCompleter, snippetCompleter } = langTools;
@@ -27,10 +29,10 @@ const defaultCompleters = [textCompleter, keyWordCompleter, snippetCompleter];
 const escChars = term => term.replace('$', '\\$').replace('#', '\\#');
 const isAttribFunction = term => /[a-zA-Z]+\([^)]*\)(\.[^)]*\))?/g.test(term);
 const createSuggestionItem = (key, namespace, lvl = 0, meta = '') => ({
-  caption: key,
-  value: key,
-  score: 10000 + lvl,
-  meta: meta || `${namespace} Object ${isAttribFunction(key) ? 'Method' : 'Property'}`,
+    caption: key,
+    value: key,
+    score: 10000 + lvl,
+    meta: meta || `${namespace} Object ${isAttribFunction(key) ? 'Method' : 'Property'}`,
 });
 
 const aceOnBlur = onBlur => (_event, editor) => {
@@ -47,7 +49,7 @@ class ContentTemplateForm extends Component {
         this.state = {
             code: '',
             name: '',
-            selectedContentType:[],
+            selectedContentType: [],
             editorCoding: '',
             contentTypes: [],
             styleSheet: '',
@@ -63,7 +65,7 @@ class ContentTemplateForm extends Component {
 
             attributesList: [],
             attributesListJson: {},
-            attributesListArray : [],
+            attributesListArray: [],
             formType: this.props.formType,
             saveStatus: false,
             errorObj: {
@@ -95,7 +97,9 @@ class ContentTemplateForm extends Component {
     componentDidMount = async () => {
         await this.getCollectionTypes();
         if (this.state.formType === EDIT_LABEL) {
+            this.props.setLoader(true);
             await this.getTemplateById();
+            this.props.setLoader(false);
         }
     }
 
@@ -170,7 +174,6 @@ class ContentTemplateForm extends Component {
             "templateName": this.state.name ? this.state.name : '',
             "templateApiId": filterUidByContentTypeLabel.uid.split('.')[filterUidByContentTypeLabel.uid.split('.').length - 1],
             "contentShape": this.state.editorCoding,
-            // TODO: require clear
             "code": "News7777",
             "styleSheet": this.state.styleSheet,
         }
@@ -226,6 +229,7 @@ class ContentTemplateForm extends Component {
      * Get code and type fields of attributes
      */
     async getAttributeData(uid) {
+        this.props.setLoader(true);
         let refinedAttributes = [];
         let refinedJson = {};
         const filteredAttributes = this.state.contentTypes.filter((el) => el.uid === uid);
@@ -234,7 +238,9 @@ class ContentTemplateForm extends Component {
             refinedJson[attr] = filteredAttributes[0].attributes[attr]['type'];
         }
         const getAtt = await getAttributes(filteredAttributes[0]['uid'])
-        this.setState({ attributesList: refinedAttributes, attributesListJson: refinedJson,attributesListArray: getAtt });
+        this.setState({ attributesList: refinedAttributes, attributesListJson: refinedJson, attributesListArray: getAtt }, () => {
+            this.props.setLoader(false);
+        });
 
     }
 
@@ -308,8 +314,8 @@ class ContentTemplateForm extends Component {
         this.setState({ editorCoding: value, errorObj: errObjTemp })
     }
 
-    handleStyleSheetChange(event){
-        this.setState({styleSheet: event.target.value});
+    handleStyleSheetChange(event) {
+        this.setState({ styleSheet: event.target.value });
     }
 
     modalHide = () => {
@@ -514,24 +520,24 @@ class ContentTemplateForm extends Component {
 
     render() {
         return (
-            <div className="container-fluid" style={{ marginTop: "2vw" }}>
+            <div className="container-fluid container-fluid-margin">
                 <form onSubmit={this.handleSubmit}>
-                    <div className="formContainer col-xs-12" style={{ marginBottom: "2em" }}>
+                    <div className="formContainer col-xs-12 formContainer-margin">
                         <div className="col-lg-6">
-                            <h1 style={{ margin: "auto" }}><b>{this.props.formType === EDIT_LABEL ? EDIT_TEMP_LABEL : ADD_TEMP_LABEL}</b></h1>
+                            <h1 className="ctf-heading"><b>{this.props.formType === EDIT_LABEL ? EDIT_TEMP_LABEL : ADD_TEMP_LABEL}</b></h1>
                         </div>
                         <div className="col-lg-6">
                             <div className="pull-right">
                                 <Link to="/">
                                     <button className="btn-default btn">{CANCEL_LABEL}</button>
                                 </Link>
-                                <button className="btn-primary btn" type="submit" disabled={!this.saveBtnStatus()} style={{ marginLeft: "1vw" }}>{SAVE_LABEL}</button>
+                                <button className="btn-primary btn ctf-save-btn" type="submit" disabled={!this.saveBtnStatus()} >{SAVE_LABEL}</button>
                             </div>
                         </div>
                     </div>
                     <div className="formContainer col-xs-12 form-group">
                         <div className="col-lg-12">
-                            <legend style={{ fontSize: "12px", color: '#d1d1d1' }}>
+                            <legend className="ctf-legend">
                                 <div className="text-right">
                                     * <span><FormattedMessage id="app.requiredFields" /></span>
                                 </div>
@@ -542,27 +548,25 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2 text-right">
                             <label htmlFor="type" className="control-label">
                                 <span className="FormLabel">
-                                <span><FormattedMessage id="app.type" /></span>
+                                    <span><FormattedMessage id="app.type" /></span>
                                     <sup>
                                         <i className="fa fa-asterisk required-icon FormLabel__required-icon"></i>
                                     </sup>
                                 </span>
                             </label>
-                            <FieldLevelHelp buttonClass="" close={undefined} content= {this.props.intl. formatMessage({ id: "app.selectOneExistingCollectionTypeToUseForTheContentTemplate" })} inline placement="right" rootClose />
+                            <FieldLevelHelp buttonClass="" close={undefined} content={this.props.intl.formatMessage({ id: "app.selectOneExistingCollectionTypeToUseForTheContentTemplate" })} inline placement="right" rootClose />
                         </div>
                         <div className={`col-lg-10`}>
-                             <Typeahead
+                            <Typeahead
                                 id="basic-typeahead-multiple"
                                 onChange={this.handleTypeHeadChange}
                                 options={this.state.contentTypes}
                                 placeholder={this.props.intl.formatMessage({ id: "app.choose" })}
-                                emptyLabel={this.props.intl.formatMessage({id:"app.noMatchesFound"})}
+                                emptyLabel={this.props.intl.formatMessage({ id: "app.noMatchesFound" })}
                                 selected={this.state.selectedContentType}
-                                // className={this.state.errorObj.type.message && 'has-error'}
                                 className={`ignore_height ${this.state.errorObj.type.message && 'has-error'}` }
                                 onBlur={() => this.onBlurHandler(ELE_TYPE.TYPE)}
                                 disabled={this.state.formType === EDIT_LABEL}
-                                //emptyLabel={​​​​​​this.props.intl.formatMessage({​​​​​​ id: "app.noMatchesFound" }​​​​​​)}​​​​​​
                             />
                             {this.state.errorObj.type.message &&
                                 <span className="validation-block">
@@ -575,11 +579,11 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2 text-right">
                             <label htmlFor="name" className="control-label">
                                 <span className="FormLabel">
-                                <span><FormattedMessage id="app.name" /></span>
+                                    <span><FormattedMessage id="app.name" /></span>
                                     <sup>
                                         <i className="fa fa-asterisk required-icon FormLabel__required-icon"></i>
                                     </sup>
-                                    <FieldLevelHelp buttonClass="" close={undefined} content={this.props.intl. formatMessage({ id: "app.youCanInsertUpTo50Characters,IncludingUpperOrLowerCaseLettersNumbersAndSpecialCharacters" })}  inline placement="right" rootClose />
+                                    <FieldLevelHelp buttonClass="" close={undefined} content={this.props.intl.formatMessage({ id: "app.youCanInsertUpTo50Characters,IncludingUpperOrLowerCaseLettersNumbersAndSpecialCharacters" })} inline placement="right" rootClose />
                                 </span>
                             </label>
                         </div>
@@ -609,7 +613,7 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2 text-right">
                             <label htmlFor="attributes" className="control-label">
                                 <span className="FormLabel">
-                                <span><FormattedMessage id="app.attributes" /> </span>
+                                    <span><FormattedMessage id="app.attributes" /> </span>
                                     <sup>
                                         <i className="fa fa-asterisk required-icon FormLabel__required-icon"></i>
                                     </sup>
@@ -619,24 +623,28 @@ class ContentTemplateForm extends Component {
                         </div>
 
                         <div className="col-lg-10">
-                            {/* <table className="table dataTable table-striped table-bordered table-hover"> */}
-                            <table className="table table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th><FormattedMessage id="app.code" /></th>
-                                        <th><FormattedMessage id="app.type" /></th>
-                                        {/* TODO: Hided Roles for time being. */}
-                                        {/* <th>Roles</th> */}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.state.attributesList.map(el => (
-                                        <tr key={Object.keys(el)[0]}>
-                                            <td>{Object.keys(el)[0]}</td>
-                                            <td>{el[Object.keys(el)[0]]}</td>
-                                        </tr>))}
-                                </tbody>
-                            </table>
+                            <Spinner
+                                inline={false}
+                                inverse={false}
+                                loading={this.props.loading}
+                                size="lg"
+                            >
+                                <table className="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th><FormattedMessage id="app.code" /></th>
+                                            <th><FormattedMessage id="app.type" /></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.attributesList.map(el => (
+                                            <tr key={Object.keys(el)[0]}>
+                                                <td>{Object.keys(el)[0]}</td>
+                                                <td>{el[Object.keys(el)[0]]}</td>
+                                            </tr>))}
+                                    </tbody>
+                                </table>
+                            </Spinner>
                         </div>
                     </div>
                     <div className="formContainer col-xs-12 form-group">
@@ -652,9 +660,7 @@ class ContentTemplateForm extends Component {
                             </label>
                         </div>
                         <div className="col-lg-10">
-                            <button type="button" onClick={() => this.setState({ modalShow: true })} className="btn-default btn" style={{
-                                color: "black"
-                            }}><FormattedMessage id="app.inlineEditingAssistant" /></button>
+                            <button type="button" onClick={() => this.setState({ modalShow: true })} className="btn-default btn inlineEditingAssistant-btn"><FormattedMessage id="app.inlineEditingAssistant" /></button>
                         </div>
                     </div>
                     <div className="formContainer col-xs-12 form-group">
@@ -679,7 +685,7 @@ class ContentTemplateForm extends Component {
                                 onChange={this.handleEditorCodingChange}
                                 onLoad={this.onEditorLoaded}
                                 value={this.state.editorCoding}
-                                style={{ borderStyle: "solid", borderColor: "silver", borderWidth: "thin" }}
+                                className="aceEditor"
                                 onBlur={() => this.onBlurHandler(ELE_TYPE.EDITORCODING)}
                             />
                         </div>
@@ -704,8 +710,8 @@ class ContentTemplateForm extends Component {
                         <div className="col-lg-2 text-right">
                             <label htmlFor="stylesheet" className="control-label">
                                 <span className="FormLabel">
-                                <span><FormattedMessage id="app.styleSheet" /></span>
-                                    <FieldLevelHelp buttonClass="" close={undefined} content={this.props.intl.formatMessage({ id: "app.providesAStylesheetFileToBeUsedWithTheHTMLModel"})} inline placement="right" rootClose />
+                                    <span><FormattedMessage id="app.styleSheet" /></span>
+                                    <FieldLevelHelp buttonClass="" close={undefined} content={this.props.intl.formatMessage({ id: "app.providesAStylesheetFileToBeUsedWithTheHTMLModel" })} inline placement="right" rootClose />
                                 </span>
                             </label>
                         </div>

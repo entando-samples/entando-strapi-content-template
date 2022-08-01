@@ -77,4 +77,5 @@ export default {
     'app.selectOneExistingCollectionTypeToUseForTheContentTemplate':"Select one existing collection type to use for the content template.",
     'app.definesTheHTMLContentStructureUsingTheContentElementsDefinedByTheGivenCollectionType':"Defines the HTML content structure using the content elements defined by the given collection type.", 
     'app.providesAStylesheetFileToBeUsedWithTheHTMLModel':"Provides a stylesheet file to be used with the HTML model.",
+    'app.loading': 'loading...'
     };
