@@ -20,7 +20,11 @@ export default class TemplateSearch extends Component {
     }
 
     collectionTypeOnChange = (event) => this.setState({ selectedCollectionType: event.target.value });
-    collectionTypeOnClick = () => this.props.collectionTypeOnChange(this.state.selectedCollectionType);
+
+    collectionTypeOnClick = () => {
+        this.props.collectionTypeOnChange(this.state.selectedCollectionType);
+        this.props.setLoading(true);
+    };
 
     render() {
         return (

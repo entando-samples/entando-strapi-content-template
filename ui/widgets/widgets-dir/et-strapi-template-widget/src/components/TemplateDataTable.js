@@ -21,6 +21,7 @@ class TemplateDataTable extends Component {
         this.state = {
             templateData: [],
             modalShow: false,
+            loadingData:false,
             loading: true,
             selectedTempate: null,
             page: PAGE,
@@ -91,19 +92,22 @@ class TemplateDataTable extends Component {
     }
 
     async getTemplates(selectedCollectionType, shouldInitPage = false) {
+        this.setState({loadingData: true});
         const data = await getAllTemplates(shouldInitPage ? 1 : this.state.page, this.state.pageSize, selectedCollectionType);
         if (data || !isError) {
             const { payload } = data.templateList;
             const { lastPage, page, pageSize, totalItems } = data.templateList.metadata;
+            this.props.setLoading(false);
             this.setState({
                 templateData: payload,
-                loading: false,
+                // loading: false,
                 lastPage: lastPage,
                 page: page,
                 pageSize: pageSize,
                 totalItems: totalItems
             });
         }
+        this.setState({loadingData: false});
     }
 
     changePage(page) {
@@ -144,10 +148,9 @@ class TemplateDataTable extends Component {
             <>
                 <div className="show-grid">
                     <Spinner
-                        className=""
                         inline={false}
                         inverse={false}
-                        loading={this.state.loading}
+                        loading={this.props.loadingState || this.state.loadingData}
                         size="lg"
                     >
                         <div className="col-lg-11"></div>
