@@ -6,7 +6,12 @@ export default class ListContentTemplates extends Component {
         super(props);
         this.state = {
             selectedCollectionType: "All",
+            loading: true
         };
+    }
+
+    setLoading = (loadingState) => {
+        this.setState({loading: loadingState})
     }
 
     collectionTypeOnChange = (selectedCollectionType) => this.setState({selectedCollectionType});
@@ -14,8 +19,8 @@ export default class ListContentTemplates extends Component {
     render() {
         return (
             <div className={"mv-2"}>
-                <TemplateSearch collectionTypeOnChange={this.collectionTypeOnChange} />
-                <TemplateDataTable addNotification={this.props.addNotification} selectedCollectionType={this.state.selectedCollectionType} />
+                <TemplateSearch loadingState={this.state.loading} setLoading={this.setLoading} collectionTypeOnChange={this.collectionTypeOnChange} />
+                <TemplateDataTable loadingState={this.state.loading} setLoading={this.setLoading} addNotification={this.props.addNotification} selectedCollectionType={this.state.selectedCollectionType} />
             </div>
         )
     }

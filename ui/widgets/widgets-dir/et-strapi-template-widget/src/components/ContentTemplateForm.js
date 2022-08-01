@@ -19,6 +19,8 @@ import { addNewTemplate, editTemplate, getTemplateById } from '../integration/Te
 import ModalUI from './ModalUI';
 import { FieldLevelHelp } from 'patternfly-react';
 import { FormattedMessage, injectIntl } from "react-intl";
+import { Spinner } from 'patternfly-react/dist/js/components/Spinner';
+
 const langTools = ace.acequire('ace/ext/language_tools');
 const tokenUtils = ace.acequire('ace/autocomplete/util');
 const { textCompleter, keyWordCompleter, snippetCompleter } = langTools;
@@ -95,7 +97,9 @@ class ContentTemplateForm extends Component {
     componentDidMount = async () => {
         await this.getCollectionTypes();
         if (this.state.formType === EDIT_LABEL) {
+            this.props.setLoader(true);
             await this.getTemplateById();
+            this.props.setLoader(false);
         }
     }
 
@@ -155,6 +159,7 @@ class ContentTemplateForm extends Component {
     }
 
     handleSubmit = async (event) => {
+        this.setState({saveStatus: true});
         event.preventDefault();
         let notificationObj = NOTIFICATION_OBJECT;
         notificationObj.key = uuidv4();
@@ -195,7 +200,6 @@ class ContentTemplateForm extends Component {
                 notificationObj.type = NOTIFICATION_TYPE.SUCCESS;
                 notificationObj.message = TEMPLATE_CREATED_SUCCESSFULLY_MSG;
                 notificationObj.timerdelay = NOTIFICATION_TIMER_SUCCESS;
-                this.setState({ saveStatus: true });
                 this.props.history.push('/');
             }
             this.props.addNotification(notificationObj);
@@ -226,6 +230,7 @@ class ContentTemplateForm extends Component {
      * Get code and type fields of attributes
      */
     async getAttributeData(uid) {
+        this.props.setLoader(true);
         let refinedAttributes = [];
         let refinedJson = {};
         const filteredAttributes = this.state.contentTypes.filter((el) => el.uid === uid);
@@ -234,7 +239,9 @@ class ContentTemplateForm extends Component {
             refinedJson[attr] = filteredAttributes[0].attributes[attr]['type'];
         }
         const getAtt = await getAttributes(filteredAttributes[0]['uid'])
-        this.setState({ attributesList: refinedAttributes, attributesListJson: refinedJson, attributesListArray: getAtt });
+        this.setState({ attributesList: refinedAttributes, attributesListJson: refinedJson,attributesListArray: getAtt }, () => {
+            this.props.setLoader(false);
+        });
 
     }
 
@@ -508,6 +515,10 @@ class ContentTemplateForm extends Component {
     }
     // =================== END: Coding of React-Ace ==============
 
+    saveBtnStatus = () => {
+        return this.state.errorObj.name.valid && this.state.errorObj.editorCoding.valid && this.state.errorObj.type.valid && !this.state.saveStatus;
+    }
+
     render() {
         return (
             <div className="container-fluid container-fluid-margin">
@@ -521,7 +532,7 @@ class ContentTemplateForm extends Component {
                                 <Link to="/">
                                     <button className="btn-default btn">{CANCEL_LABEL}</button>
                                 </Link>
-                                <button className="btn-primary btn ctf-save-btn" type="submit" disabled={this.state.saveStatus || !(this.state.errorObj.name.valid && this.state.errorObj.editorCoding.valid && this.state.errorObj.type.valid)}>{SAVE_LABEL}</button>
+                                <button className="btn-primary btn ctf-save-btn" type="submit" disabled={!this.saveBtnStatus()} >{SAVE_LABEL}</button>
                             </div>
                         </div>
                     </div>
@@ -613,23 +624,29 @@ class ContentTemplateForm extends Component {
                         </div>
 
                         <div className="col-lg-10">
-                            <table className="table dataTable table-striped table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th><FormattedMessage id="app.code" /></th>
-                                        <th><FormattedMessage id="app.type" /></th>
-                                        {/* TODO: Hided Roles for time being. */}
-                                        {/* <th>Roles</th> */}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.state.attributesList.map(el => (
-                                        <tr key={Object.keys(el)[0]}>
-                                            <td>{Object.keys(el)[0]}</td>
-                                            <td>{el[Object.keys(el)[0]]}</td>
-                                        </tr>))}
-                                </tbody>
-                            </table>
+                            <Spinner
+                                className=""
+                                inline={false}
+                                inverse={false}
+                                loading={this.props.loading}
+                                size="lg"
+                            >
+                                <table className="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th><FormattedMessage id="app.code" /></th>
+                                            <th><FormattedMessage id="app.type" /></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {this.state.attributesList.map(el => (
+                                            <tr key={Object.keys(el)[0]}>
+                                                <td>{Object.keys(el)[0]}</td>
+                                                <td>{el[Object.keys(el)[0]]}</td>
+                                            </tr>))}
+                                    </tbody>
+                                </table>
+                            </Spinner>
                         </div>
                     </div>
                     <div className="formContainer col-xs-12 form-group">

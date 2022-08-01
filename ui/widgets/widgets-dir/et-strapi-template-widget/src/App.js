@@ -19,7 +19,8 @@ export default class App extends Component {
     this.state = {
       notificationList : [],
       locale:'en',
-      messages:{ en, it }
+      messages:{ en, it },
+      loading: false,
     }
   }
 
@@ -54,6 +55,10 @@ export default class App extends Component {
   // handleChange = event => {
   //   this.setState({ locale: event.target.value })
   // };
+
+  setLoader = (shouldLoad) => {
+    this.setState({ loading: shouldLoad })
+  }
  
   render() {
     return (
@@ -89,8 +94,12 @@ export default class App extends Component {
                 <Route path="/" exact>
                   <ListContentTemplates addNotification={this.addNotification} />
                 </Route>
-                <Route path="/add-template" exact><AddContentTemplate addNotification={this.addNotification} /></Route>
-                <Route path="/edit-template/:templateId" exact><EditContentTemplate addNotification={this.addNotification} /></Route>
+                <Route path="/add-template" exact>
+                  <AddContentTemplate addNotification={this.addNotification} loading={this.state.loading} setLoader={this.setLoader} />
+                </Route>
+                <Route path="/edit-template/:templateId" exact>
+                  <EditContentTemplate addNotification={this.addNotification} loading={this.state.loading} setLoader={this.setLoader} />
+                </Route>
               </Switch>
             </HashRouter>
             :

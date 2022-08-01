@@ -6,7 +6,7 @@ export default {
     'app.id':'Id',
     'app.actions':'Actions',
     'app.styleSheet':'Style Sheet',
-    'app.inlineEditingAssistant':'Inline editing assistant',
+    'app.inlineEditingAssistant':'Inline editing assist',
     'app.htmlModel':'HTML Model',
     'app.code':'Code',
     'app.attributes':'Attributes',
@@ -41,7 +41,7 @@ export default {
     'app.deleteTemplate':'Delete Template',
     'app.delete':'Delete',
     'app.forEntandolabels':'for Entando labels',
-    'app.inlineEditingAssistan':'Inline editing assistant',
+    'app.inlineEditingAssistan':'Inline editing assist',
     'app.openA':'Open a',
     'app.tag':'TAG',
     'app.likeDivPSpan':'like div p span...' ,
@@ -77,4 +77,5 @@ export default {
     'app.selectOneExistingCollectionTypeToUseForTheContentTemplate':"Select one existing collection type to use for the content template.",
     'app.definesTheHTMLContentStructureUsingTheContentElementsDefinedByTheGivenCollectionType':"Defines the HTML content structure using the content elements defined by the given collection type.", 
     'app.providesAStylesheetFileToBeUsedWithTheHTMLModel':"Provides a stylesheet file to be used with the HTML model.",
+    'app.loading': 'loading...'
     };

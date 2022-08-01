@@ -6,7 +6,7 @@ export default {
     'app.id':'Id',
     'app.actions':'Azioni',
     'app.styleSheet':'Foglio di stile',
-    'app.inlineEditingAssistant':'Assistente di modifica in linea',
+    'app.inlineEditingAssistant':'Assistenza per la modifica in linea',
     'app.htmlModel':'Modello HTML',
     'app.code':'Codice',
     'app.attributes':'Attributi',
@@ -40,7 +40,7 @@ export default {
     'app.deleteTemplate':'Elimina modello',
     'app.delete':'Elimina',
     'app.forEntandolabels':'per etichette Entando',
-    'app.inlineEditingAssistan':'Assistente di modifica in linea',
+    'app.inlineEditingAssistan':'Assistenza per la modifica in linea',
     'app.openA':'Aprire un',
     'app.tag':'ETICHETTA',
     'app.likeDivPSpan':'come div p span...' ,
@@ -76,4 +76,5 @@ export default {
     'app.selectOneExistingCollectionTypeToUseForTheContentTemplate':"Seleziona un tipo di raccolta esistente da utilizzare per il modello di contenuto.",
     'app.definesTheHTMLContentStructureUsingTheContentElementsDefinedByTheGivenCollectionType':"Definisce la struttura del contenuto HTML utilizzando gli elementi del contenuto definiti dal tipo di raccolta specificato.", 
     'app.providesAStylesheetFileToBeUsedWithTheHTMLModel':"Fornisce un file di foglio di stile da utilizzare con il modello HTML.",
+    'app.loading': 'Caricamento in corso...'
 }
