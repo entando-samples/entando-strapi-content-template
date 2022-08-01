@@ -239,7 +239,7 @@ class ContentTemplateForm extends Component {
             refinedJson[attr] = filteredAttributes[0].attributes[attr]['type'];
         }
         const getAtt = await getAttributes(filteredAttributes[0]['uid'])
-        this.setState({ attributesList: refinedAttributes, attributesListJson: refinedJson,attributesListArray: getAtt }, () => {
+        this.setState({ attributesList: refinedAttributes, attributesListJson: refinedJson, attributesListArray: getAtt }, () => {
             this.props.setLoader(false);
         });
 
@@ -625,7 +625,6 @@ class ContentTemplateForm extends Component {
 
                         <div className="col-lg-10">
                             <Spinner
-                                className=""
                                 inline={false}
                                 inverse={false}
                                 loading={this.props.loading}
