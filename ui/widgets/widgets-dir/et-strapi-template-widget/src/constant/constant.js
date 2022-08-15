@@ -199,7 +199,7 @@ export const STRAPI_CONTYPE_URL = 'http://localhost:1337/content-manager/content
 export const STRAPI_COLTYPE_URL = 'http://localhost:1337/content-manager/collection-types/';
 
 export const STRAPI_BASE_URL_KEY = 'STRAPI_CONFIG';
-export const STRAPI_URL = 'http://20.113.131.137:1337'
 export const BTN_RELOAD_PAGE = 'Reload Page';
+export const STRAPI_CONFIG_WARNING_MSG = "Strapi can't be reached. Please use Strapi Config Widget and configure a correct URL";
 
 export const REACT_APP_LOCAL_STRAPI_TOKEN = ''
